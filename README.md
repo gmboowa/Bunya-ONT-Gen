@@ -102,9 +102,4 @@ MIT License. See [LICENSE](LICENSE) for more information.
 
 ---
 
-## Maintainer
 
-**Gerald Mboowa**  
-Bioinformatics Implementation Expert  
-Broad Institute | Africa CDC  
-Email: [your_email@example.com](mailto:your_email@example.com)
