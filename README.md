@@ -1,7 +1,7 @@
 
 # Bunya-ONT-Gen: A pipeline for viral ONT metagenomic analysis
 
-**BunyaGen** is a modular, end-to-end analysis pipeline designed for the characterization of viral genomes from Oxford Nanopore long-read metagenomic data. It is tailored for emerging and re-emerging viruses such as Bunyaviruses and supports everything from raw read quality control to phylogenetic tree construction.
+**Bunya-ONT-Gen** is a modular, end-to-end analysis pipeline designed for the characterization of viral genomes from Oxford Nanopore long-read metagenomic data. It is tailored for emerging and re-emerging viruses such as Bunyaviruses and supports everything from raw read quality control to phylogenetic tree construction.
 
 ---
 
@@ -85,7 +85,6 @@ Refer to `docs/config.yaml` to customize tool parameters and file paths.
 - Taxonomic classification table
 - Predicted genes and protein functions
 - Multiple sequence alignment and `.nwk` tree file
-- Publication-ready phylogenetic tree visualizations
 
 ---
 
