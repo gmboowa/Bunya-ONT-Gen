@@ -12,7 +12,7 @@
 - De novo assembly of viral genomes
 - Taxonomic classification using multiple tools
 - Functional gene annotation
-- Phylogenetic analysis pipeline for evolutionary inference
+- Phylogenetic tree for evolutionary inference
 
 
 ---
