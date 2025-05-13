@@ -1,11 +1,11 @@
 
-# BunyaGen: A Pipeline for Viral ONT Metagenomic Analysis
+# Bunya-ONT-Gen: A pipeline for viral ONT metagenomic analysis
 
 **BunyaGen** is a modular, end-to-end analysis pipeline designed for the characterization of viral genomes from Oxford Nanopore long-read metagenomic data. It is tailored for emerging and re-emerging viruses such as Bunyaviruses and supports everything from raw read quality control to phylogenetic tree construction.
 
 ---
 
-## Key Features
+## Key features
 
 - Optimized for Oxford Nanopore (ONT) long-read data
 - Quality control and filtering of metagenomic reads
@@ -13,23 +13,22 @@
 - Taxonomic classification using multiple tools
 - Functional gene annotation
 - Phylogenetic analysis pipeline for evolutionary inference
-- Flexible tool selection for each stage
-- Easy customization for additional pathogens or workflows
+
 
 ---
 
-## Workflow Overview
+## Workflow overview
 
 ![BunyaGen Workflow](BunyaGen_Workflow.png)
 
-> The diagram illustrates a comprehensive ONT metagenomic analysis pipeline, ending with phylogenetic tree construction using MAFFT and IQ-TREE.
+> The diagram illustrates nanopore metagenomic analysis pipeline, ending with phylogenetic tree construction using MAFFT and IQ-TREE.
 
-### Detailed Steps:
+### Detailed steps:
 
 #### 1. **Input**
 - FASTQ files from ONT sequencers
 
-#### 2. **Quality Control**
+#### 2. **Quality control**
 - **Fastp**: Adapter trimming and quality filtering
 - **NanoStat**: Summary statistics of read quality
 - **NanoPlot**: Visualization of read metrics
@@ -38,15 +37,15 @@
 #### 3. **Assembly**
 - Tools such as **Flye**, **Canu**, or **Raven** for long-read genome assembly
 
-#### 4. **Classification & Annotation**
+#### 4. **Classification & annotation**
 - **Kraken2**, **Kaiju**, **Centrifuge**, or **Bracken** for taxonomic classification
 - **Medaka** and **Racon** for polishing ONT assemblies
 
-#### 5. **Functional Annotation**
+#### 5. **Functional annotation**
 - **Prodigal** for gene prediction
 - **DIAMOND** for fast similarity search against protein databases
 
-#### 6. **Phylogenetic Analysis**
+#### 6. **Phylogenetic analysis**
 - **MAFFT** for multiple sequence alignment
 - **IQ-TREE** for phylogenetic tree inference with model selection
 
@@ -90,7 +89,7 @@ Refer to `docs/config.yaml` to customize tool parameters and file paths.
 
 ---
 
-## Citing BunyaGen
+## Citing Bunya-ONT-Gen
 
 If you use this pipeline, please cite this repository and the relevant tools individually.
 
