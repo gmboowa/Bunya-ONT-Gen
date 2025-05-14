@@ -75,7 +75,7 @@ conda activate hostile
 Required arguments
 
 Argument        Description
---fasta	          NCBI accession (e.g., GCF_009914755.4) or path to a local FASTA reference
+--fasta	         NCBI accession (e.g., GCF_009914755.4) or path to a local FASTA reference
 -i, --input      Text file listing paths to FASTQ files (one per line)
 -o, --output     Directory where cleaned results will be stored
 
