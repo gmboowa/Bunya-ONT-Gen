@@ -100,7 +100,7 @@ python3 hostile_clean_ont_human_minimap2.py \
 ```
 ```bash
 
-python3 hostile_clean_ont_human_minimap2.py --fasta GCF_009914755.4 -i Bunya_ont_sample.list.txt -o Clean
+python3 hostile_clean_ont_human_minimap2.py --fasta GCF_009914755.4 -i sample.list.txt -o Clean
 
 ```
 
