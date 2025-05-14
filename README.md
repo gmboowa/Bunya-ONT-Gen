@@ -94,7 +94,7 @@ python3 hostile_clean_ont_human_minimap2.py \
 # Example using T2T-CHM13v2.0 human reference
 python3 hostile_clean_ont_human_minimap2.py \
   --fasta  GCF_009914755.4 \
-  -i       Bunya_ont_sample.list.txt \
+  -i       sample.list.txt \
   -o       Clean
 
 ```
@@ -116,46 +116,114 @@ The input list file (Bunya_ont_sample.list.txt) should contain absolute or relat
 
 ```
 
+```
 
-You can install all dependencies via conda using the provided `installer.yml`:
+### Environment setup for genomic analysis
 
+```bash
+conda env create -f Bunya-ONT-Gen.yml
+conda activate Bunya-ONT-Gen
+conda install -c bioconda -c conda-forge fastqc nanoplot minimap2 samtools bcftools medaka \
+multiqc spades kraken2 mafft fasttree seqtk flye krona snpeff -y
 
+```
 
-conda env create -f installer.yml
-conda activate bunyagen
+### Setup Kraken2 database
 
-...
-
----
-
-## Usage
-
-Run the pipeline with the following structure:
-
+```bash
+bash scripts/setup_kraken_db.sh
 
 ```
 
 ---
 
-## Output
+## Usage
 
-- QC reports (`.html`, `.json`, `.pdf`)
-- Assembled genome(s) (`.fasta`)
-- Taxonomic classification table
-- Predicted genes and protein functions
-- Multiple sequence alignment and `.nwk` tree file
+### Run whole-genome analysis
+
+```bash
+python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fasta -threads 8
+```
+### Example sample_list.txt
+
+```bash
+/home/user/Bunya_data/Sample_01_ONT_reads.fastq.gz
+/home/user/Bunya_data/Sample_02_ONT_reads.fastq.gz
+/home/user/Bunya_data/Sample_03_ONT_reads.fastq.gz
+---
+
+### Environment setup for phylogenetic analysis
+
+```bash
+conda env create -f Bunya_phylogeny.yml
+conda activate Bunya_phylogeny
+
+```
+
+### Run phylogenetic inference
+
+```bash
+
+Bunya_phylogeny.py -r Bunyavirus.gbk -i fasta_sample.txt -o results -t 8 -b 1000
+
+```
+
+### Example fasta_sample.txt
+```bash
+/home/user/Bunya_assemblies/Sample_01_assembly.fasta
+/home/user/Bunya_assemblies/Sample_02_assembly.fasta
+/home/user/Bunya_assemblies/Sample_03_assembly.fasta
+---
+
+## Inputs and outputs
+
+### Inputs for genomic analysis
+
+| File Type        | Description                |
+|------------------|----------------------------|
+| `*.fastq`        | ONT sequence files         |
+| `reference.fasta`| Bunya reference genome      |
+
+### Inputs for Phylogenetic analysis
+
+| Parameter         | Description                          | Default       |
+|-------------------|--------------------------------------|---------------|
+| `-inputs`         | File with FASTQ paths                | Required      |
+| `-reference`      | Bunya reference genome               | Required      |
+| `-threads`        | CPU threads for parallel steps       | `8`           |
+| `-bootstrap`      | Phylogenetic bootstrap replicates    | `1000`        |
+| `-min_coverage`   | Consensus calling threshold          | `20x`         |
+| `-tree_model`     | IQ-TREE substitution model           | `MFP (auto)`  |
+| `-aln_consensus`  | trimAl conservation threshold        | `60%`         |
 
 ---
 
-## Citing Bunya-ONT-Gen
+### Output structure
 
-If you use this pipeline, please cite this repository and the relevant tools individually.
+```text
+results/
+├── 00_RawDataQC/          # FastQC/NanoPlot reports
+├── 01_Assemblies/         # Flye & Medaka outputs
+├── 02_Variants/           # VCF files & annotations
+├── 03_Phylogeny/
+│   ├── alignment.fasta    # MAFFT multiple alignment
+│   ├── trimmed_alignment/ # trimAl filtered sequences
+│   ├── iqtree_results/    # Tree files + support values
+│   └── phylogeny.pdf      # Final ggtree visualization
+├── 04_Taxonomy/           # Kraken2/Krona reports
+└── reports/               # MultiQC + summary stats
+```
 
 ---
 
-## License
+## Troubleshooting
 
-MIT License.
+| Issue               | Recommendation                                                  |
+|---------------------|-----------------------------------------------------------------|
+| Memory errors       | Reduce thread count (e.g., `-threads 4`)                        |
+| Assembly failures   | Inspect quality reports in `results/qc/nanoplot/`               |
+| Dependency problems | Update Conda with `conda env update -f Bunya-ONT-Gen.yml`            |
+
 
 ---
 
