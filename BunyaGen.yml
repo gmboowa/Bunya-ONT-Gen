@@ -1,0 +1,49 @@
+name: Bunya-ONT-Gen
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  # Quality control and visualization
+  - fastqc=0.12.1              # Read quality assessment
+  - nanoplot=1.41.0            # Nanopore QC plots
+
+  # Long-read alignment and processing
+  - minimap2=2.26              # ONT read alignment
+  - samtools=1.18              # Alignment manipulation and indexing
+  - bcftools=1.18              # Variant calling and processing
+  - seqtk=1.4                  # FASTQ/FASTA toolkit
+
+  # Genome assembly and polishing
+  - flye=2.9.2                 # De novo assembler for ONT data
+  - medaka=1.7.3               # ONT consensus polishing
+
+  # Taxonomic classification
+  - kraken2=2.1.2              # Taxonomic classification
+  - krona=2.8.1                # Interactive visualization of taxonomy
+
+  # Variant annotation
+  - snpeff=5.1                 # Variant annotation tool
+  - java-openjdk=21            # Java runtime (required by snpEff)
+
+  # Multiple sequence alignment and phylogenetics
+  - mafft=7.520                # Multiple sequence alignment
+  - fasttree=2.1.11            # Approximate maximum-likelihood phylogenetic tree
+
+  # Assembly and pipeline visualization
+  - multiqc=1.14               # Aggregate QC reports
+
+  # Genome assembly (alternative or hybrid)
+  - spades=3.15.5              # Genome assembler (used optionally)
+
+  # Python environment and dependencies
+  - python=3.10                # Python interpreter
+  - pandas=2.2.2               # Data manipulation and analysis
+  - biopython=1.83             # Bioinformatics tools for Python
+  - openpyxl=3.1.2             # Excel output support
+
+  # Optional: install from pip (can extend as needed)
+  - pip
+  - pip:
+      - rich                   # Pretty CLI output
+      - tqdm                   # Progress bars
