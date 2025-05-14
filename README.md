@@ -24,15 +24,15 @@
 
 > The diagram illustrates nanopore metagenomic analysis pipeline, ending with phylogenetic tree construction using MAFFT and IQ-TREE.
 
-### Detailed steps:
-
+### Steps:
 
 
 #### 1. **Input**
 - FASTQ files from ONT sequencers
 
 #### 2. **Human reads removal**
-
+- **Hostile**: Removes host sequences from short and long read (meta)genomes,
+  
 #### 3. **Quality control**
 - **Fastp**: Adapter trimming and quality filtering
 - **NanoStat**: Summary statistics of read quality
@@ -75,9 +75,9 @@ conda activate hostile
 Required arguments
 
 Argument	description
---fasta	NCBI accession (e.g., GCF_009914755.4) or path to a local FASTA reference
--i, --input	Text file listing paths to FASTQ files (one per line)
--o, --output	Directory where cleaned results will be stored
+--fasta	  NCBI accession (e.g., GCF_009914755.4) or path to a local FASTA reference
+-i, --input  Text file listing paths to FASTQ files (one per line)
+-o, --output  Directory where cleaned results will be stored
 
 
 ```
@@ -103,7 +103,7 @@ Input format
 
 The input list file (Bunya_ont_sample.list.txt) should contain absolute or relative paths to single-end FASTQ files, one per line:
 
-```bash
+
 
 /path/to/sample1.fastq.gz
 /path/to/sample2.fastq.gz
@@ -126,15 +126,8 @@ conda activate bunyagen
 
 Run the pipeline with the following structure:
 
-```bash
-bash run_bunyagen.sh \
-  -i path/to/reads.fastq \
-  -o output_directory \
-  --min_length 1000 \
-  --threads 8
-```
 
-Refer to `docs/config.yaml` to customize tool parameters and file paths.
+```
 
 ---
 
