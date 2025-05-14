@@ -74,7 +74,7 @@ conda activate hostile
 
 Required arguments
 
-Argument	       Description
+Argument	      Description
 --fasta	         NCBI accession (e.g., GCF_009914755.4) or path to a local FASTA reference
 -i, --input      Text file listing paths to FASTQ files (one per line)
 -o, --output     Directory where cleaned results will be stored
@@ -103,10 +103,12 @@ python3 hostile_clean_ont_human_minimap2.py \
 python3 hostile_clean_ont_human_minimap2.py --fasta GCF_009914755.4 -i Bunya_ont_sample.list.txt -o Clean
 
 ```
+
+```bash
+
 Input format
 
 The input list file (Bunya_ont_sample.list.txt) should contain absolute or relative paths to single-end FASTQ files, one per line:
-
 
 
 /path/to/sample1.fastq.gz
