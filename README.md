@@ -74,10 +74,10 @@ conda activate hostile
 
 Required arguments
 
-Argument	description
---fasta	  NCBI accession (e.g., GCF_009914755.4) or path to a local FASTA reference
--i, --input  Text file listing paths to FASTQ files (one per line)
--o, --output  Directory where cleaned results will be stored
+Argument	       Description
+--fasta	         NCBI accession (e.g., GCF_009914755.4) or path to a local FASTA reference
+-i, --input      Text file listing paths to FASTQ files (one per line)
+-o, --output     Directory where cleaned results will be stored
 
 
 ```
@@ -87,18 +87,22 @@ Basic usage
 
 # General usage
 python3 hostile_clean_ont_human_minimap2.py \
-  --fasta <ACCESSION_OR_PATH> \
-  -i <INPUT_LIST> \
-  -o <OUTPUT_DIR>
+  --fasta  <ACCESSION_OR_PATH> \
+  -i       <INPUT_LIST> \
+  -o       <OUTPUT_DIR>
 
 # Example using T2T-CHM13v2.0 human reference
 python3 hostile_clean_ont_human_minimap2.py \
-  --fasta GCF_009914755.4 \
-  -i Bunya_ont_sample.list.txt \
-  -o Clean
+  --fasta  GCF_009914755.4 \
+  -i       Bunya_ont_sample.list.txt \
+  -o       Clean
+
+```
+```bash
 
 python3 hostile_clean_ont_human_minimap2.py --fasta GCF_009914755.4 -i Bunya_ont_sample.list.txt -o Clean
 
+```
 Input format
 
 The input list file (Bunya_ont_sample.list.txt) should contain absolute or relative paths to single-end FASTQ files, one per line:
@@ -108,7 +112,7 @@ The input list file (Bunya_ont_sample.list.txt) should contain absolute or relat
 /path/to/sample1.fastq.gz
 /path/to/sample2.fastq.gz
 
-
+```
 
 
 You can install all dependencies via conda using the provided `installer.yml`:
