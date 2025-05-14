@@ -1,0 +1,26 @@
+name: Bunya_phylogeny
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Core environment
+  - python=3.10
+  - pip=23.1.2
+
+  # Phylogenetic and alignment tools
+  - mafft=7.505
+  - iqtree=2.2.2.7
+  - trimal=1.4.1
+  - modeltest-ng=0.1.7
+  - fasttree=2.1.11
+
+  # R environment for visualization
+  - r-base=4.2
+  - bioconductor-ggtree
+  - r-ape=5.7
+  - r-ggplot2=3.4.2  # this is ggplot2 for R
+
+  # Python libraries
+  - biopython=1.81
