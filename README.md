@@ -143,6 +143,7 @@ bash scripts/setup_kraken_db.sh
 
 ```bash
 python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fasta -threads 8
+
 ```
 ### Example sample_list.txt
 
@@ -150,6 +151,8 @@ python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fast
 /home/user/Bunya_data/Sample_01_ONT_reads.fastq.gz
 /home/user/Bunya_data/Sample_02_ONT_reads.fastq.gz
 /home/user/Bunya_data/Sample_03_ONT_reads.fastq.gz
+
+```
 ---
 
 ### Environment setup for phylogenetic analysis
@@ -169,15 +172,21 @@ Bunya_phylogeny.py -r Bunyavirus.gbk -i fasta_sample.txt -o results -t 8 -b 1000
 ```
 
 ### Example fasta_sample.txt
+
 ```bash
+
 /home/user/Bunya_assemblies/Sample_01_assembly.fasta
 /home/user/Bunya_assemblies/Sample_02_assembly.fasta
 /home/user/Bunya_assemblies/Sample_03_assembly.fasta
+
+```
 ---
 
 ## Inputs and outputs
 
 ### Inputs for genomic analysis
+
+```bash
 
 | File Type        | Description                |
 |------------------|----------------------------|
@@ -212,6 +221,7 @@ results/
 │   └── phylogeny.pdf      # Final ggtree visualization
 ├── 04_Taxonomy/           # Kraken2/Krona reports
 └── reports/               # MultiQC + summary stats
+
 ```
 
 ---
