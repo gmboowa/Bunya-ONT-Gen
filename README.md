@@ -65,7 +65,7 @@ This pipeline removes human host reads (e.g., T2T-CHM13v2.0) from single-end Oxf
 ---
 
 
-```bash
+```
 # Install all dependencies in a clean conda environment:
 conda create -n hostile -c bioconda ncbi-datasets-cli minimap2 hostile
 conda activate hostile
@@ -83,7 +83,7 @@ Argument        Description
 ```
 Basic usage
 
-```bash
+```
 
 # General usage
 python3 hostile_clean_ont_human_minimap2.py \
@@ -98,13 +98,13 @@ python3 hostile_clean_ont_human_minimap2.py \
   -o       Clean
 
 ```
-```bash
+```
 
 python3 hostile_clean_ont_human_minimap2.py --fasta GCF_009914755.4 -i sample.list.txt -o Clean
 
 ```
 
-```bash
+```
 
 Input format
 
@@ -120,7 +120,7 @@ The input list file (Bunya_ont_sample.list.txt) should contain absolute or relat
 
 ### Environment setup for genomic analysis
 
-```bash
+```
 conda env create -f Bunya-ONT-Gen.yml
 conda activate Bunya-ONT-Gen
 conda install -c bioconda -c conda-forge fastqc nanoplot minimap2 samtools bcftools medaka \
@@ -141,13 +141,13 @@ bash scripts/setup_kraken_db.sh
 
 ### Run whole-genome analysis
 
-```bash
+```
 python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fasta -threads 8
 
 ```
 ### Example sample_list.txt
 
-```bash
+```
 /home/user/Bunya_data/Sample_01_ONT_reads.fastq.gz
 /home/user/Bunya_data/Sample_02_ONT_reads.fastq.gz
 /home/user/Bunya_data/Sample_03_ONT_reads.fastq.gz
@@ -157,7 +157,7 @@ python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fast
 
 ### Environment setup for phylogenetic analysis
 
-```bash
+```
 conda env create -f Bunya_phylogeny.yml
 conda activate Bunya_phylogeny
 
@@ -165,7 +165,7 @@ conda activate Bunya_phylogeny
 
 ### Run phylogenetic inference
 
-```bash
+```
 
 Bunya_phylogeny.py -r Bunyavirus.gbk -i fasta_sample.txt -o results -t 8 -b 1000
 
@@ -186,7 +186,7 @@ Bunya_phylogeny.py -r Bunyavirus.gbk -i fasta_sample.txt -o results -t 8 -b 1000
 
 ### Inputs for genomic analysis
 
-```bash
+```
 
 | File Type        | Description                |
 |------------------|----------------------------|
