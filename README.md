@@ -173,7 +173,7 @@ Bunya_phylogeny.py -r Bunyavirus.gbk -i fasta_sample.txt -o results -t 8 -b 1000
 
 ### Example fasta_sample.txt
 
-```bash
+```
 
 /home/user/Bunya_assemblies/Sample_01_assembly.fasta
 /home/user/Bunya_assemblies/Sample_02_assembly.fasta
