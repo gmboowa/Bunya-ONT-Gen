@@ -16,38 +16,16 @@
 
 ---
 
-### Steps
-
-1. **Input**  
-   - FASTQ files from ONT sequencers
-
-2. **Human Reads Removal**  
-   - **Hostile**: Removes host sequences from short & long read (meta)genomes
-
-3. **Quality Control**  
-   - **Fastp**: Adapter trimming & quality filtering  
-   - **NanoStat**: Summary statistics of read quality  
-   - **NanoPlot**: Visualization of read metrics  
-   - **Filtlong**: Length-based read filtering  
-
-4. **Assembly**  
-   - **Flye**, **Canu**, or **Raven** for long-read genome assembly  
-
-5. **Classification & Annotation**  
-   - **Kraken2**, **Kaiju**, **Centrifuge**, or **Bracken** for taxonomic classification  
-   - **Medaka** and **Racon** for polishing ONT assemblies  
-
-6. **Functional Annotation**  
-   - **Prodigal** for gene prediction  
-   - **DIAMOND** for fast similarity search against protein databases  
-
-7. **Phylogenetic Analysis**  
-   - **MAFFT** for multiple sequence alignment  
-   - **IQ-TREE** for phylogenetic tree inference with model selection  
-
----
-
 ## Installation
+
+### Environment Setup for Genomic Analysis
+
+```bash
+conda env create -f Bunya-ONT-Gen.yml
+conda activate Bunya-ONT-Gen
+conda install -c bioconda -c conda-forge fastqc nanoplot minimap2 samtools bcftools medaka multiqc spades kraken2 mafft fasttree seqtk flye krona snpeff -y
+CONDA_SUBDIR=osx-64 mamba create -n medaka_v1 -c bioconda -c conda-forge medaka=1.7.3
+```
 
 ### Hostile: Clean Human Reads Pipeline
 
@@ -70,27 +48,16 @@ conda activate hostile
 **Basic usage:**
 
 ```bash
-
 # Example using T2T-CHM13v2.0 human reference
 python3 hostile_clean_ont_human_minimap2.py --fasta GCF_009914755.4 -i sample.list.txt -o Clean
 ```
 
 **Input format:**  
-The input list file (`Bunya_ont_sample.list.txt`) should contain absolute or relative paths to single-end FASTQ files, one per line:
+The input list file (`Bunya_ont_sample.list.txt`) should contain absolute paths to single-end FASTQ files, one per line:
 
 ```bash
 ~/sample1.fastq.gz
 ~/sample2.fastq.gz
-```
-
----
-
-### Environment Setup for Genomic Analysis
-
-```bash
-conda env create -f Bunya-ONT-Gen.yml
-conda activate Bunya-ONT-Gen
-conda install -c bioconda -c conda-forge fastqc nanoplot minimap2 samtools bcftools medaka multiqc spades kraken2 mafft fasttree seqtk flye krona snpeff -y
 ```
 
 ---
@@ -105,8 +72,6 @@ source /opt/homebrew/Caskroom/miniforge/base/bin/activate
 conda activate BunyaGen
 
 ```
-
----
 
 ```bash
 python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fasta 
@@ -142,6 +107,39 @@ Bunya_phylogeny.py -r multifasta_Bunyavirus.fasta -i fasta_sample.txt -o results
 ~/Sample_02_assembly.fasta
 ~/Sample_03_assembly.fasta
 ```
+
+---
+
+## Steps
+
+1. **Input**
+   
+   - FASTQ files from ONT sequencers
+
+3. **Human Reads Removal**
+   
+   - **Hostile**: Removes host sequences from short & long read (meta)genomes
+
+5. **Quality Control**  
+   - **Fastp**: Adapter trimming & quality filtering  
+   - **NanoStat**: Summary statistics of read quality  
+   - **NanoPlot**: Visualization of read metrics  
+   - **Filtlong**: Length-based read filtering  
+
+6. **Assembly**  
+   - **Flye**, **Canu**, or **Raven** for long-read genome assembly  
+
+7. **Classification & Annotation**  
+   - **Kraken2**, **Kaiju**, **Centrifuge**, or **Bracken** for taxonomic classification  
+   - **Medaka** and **Racon** for polishing ONT assemblies  
+
+8. **Functional Annotation**  
+   - **Prodigal** for gene prediction  
+   - **DIAMOND** for fast similarity search against protein databases  
+
+9. **Phylogenetic Analysis**  
+   - **MAFFT** for multiple sequence alignment  
+   - **IQ-TREE** for phylogenetic tree inference with model selection  
 
 ---
 
