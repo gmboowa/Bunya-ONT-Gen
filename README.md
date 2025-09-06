@@ -78,9 +78,9 @@ python3 hostile_clean_ont_human_minimap2.py --fasta GCF_009914755.4 -i sample.li
 **Input format:**  
 The input list file (`Bunya_ont_sample.list.txt`) should contain absolute or relative paths to single-end FASTQ files, one per line:
 
-```
-/path/to/sample1.fastq.gz
-/path/to/sample2.fastq.gz
+```bash
+~/sample1.fastq.gz
+~/sample2.fastq.gz
 ```
 
 ---
@@ -111,10 +111,10 @@ python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fast
 
 **Example `sample_list.txt`:**
 
-```
-/home/user/Bunya_data/Sample_01_ONT_reads.fastq.gz
-/home/user/Bunya_data/Sample_02_ONT_reads.fastq.gz
-/home/user/Bunya_data/Sample_03_ONT_reads.fastq.gz
+```bash
+~/Sample_01_ONT_reads.fastq.gz
+~/Sample_02_ONT_reads.fastq.gz
+~/Sample_03_ONT_reads.fastq.gz
 ```
 
 ---
@@ -134,15 +134,15 @@ Bunya_phylogeny.py -r multifasta_Bunyavirus.fasta -i fasta_sample.txt -o results
 
 **Example `fasta_sample.txt`:**
 
-```
-/home/user/Bunya_assemblies/Sample_01_assembly.fasta
-/home/user/Bunya_assemblies/Sample_02_assembly.fasta
-/home/user/Bunya_assemblies/Sample_03_assembly.fasta
+```bash
+~/Sample_01_assembly.fasta
+~/Sample_02_assembly.fasta
+~/Sample_03_assembly.fasta
 ```
 
 ---
 
-## Inputs and Outputs
+## Inputs & Outputs
 
 ### Inputs for Genomic Analysis
 
@@ -167,7 +167,7 @@ Bunya_phylogeny.py -r multifasta_Bunyavirus.fasta -i fasta_sample.txt -o results
 
 ### Output Structure
 
-```
+```bash
 results/
 ├── 00_RawDataQC/          # FastQC/NanoPlot reports
 ├── 01_Assemblies/         # Flye & Medaka outputs
