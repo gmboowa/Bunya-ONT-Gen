@@ -23,9 +23,13 @@
 ```bash
 conda env create -f Bunya-ONT-Gen.yml
 conda activate Bunya-ONT-Gen
-conda install -c bioconda -c conda-forge fastqc nanoplot minimap2 samtools bcftools medaka multiqc spades kraken2 mafft fasttree seqtk flye krona snpeff -y
-mamba install -c bioconda prodigal diamond
+conda install -y -c conda-forge -c bioconda \
+  pandas biopython openjdk \
+  prodigal diamond fastqc nanoplot minimap2 samtools bcftools multiqc \
+  spades kraken2 mafft fasttree seqtk seqkit flye krona snpeff medaka
+
 CONDA_SUBDIR=osx-64 mamba create -n medaka_v1 -c bioconda -c conda-forge medaka=1.7.3
+
 ```
 
 ### Hostile: Clean Human Reads Pipeline
