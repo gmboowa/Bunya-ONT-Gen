@@ -16,12 +16,6 @@
 
 ---
 
-## Workflow Overview
-
-![BunyaGen Workflow](BunyaGen_Workflow.png)
-
-> The diagram illustrates the nanopore metagenomic analysis pipeline, ending with phylogenetic tree construction using MAFFT & IQ-TREE.
-
 ### Steps
 
 1. **Input**  
