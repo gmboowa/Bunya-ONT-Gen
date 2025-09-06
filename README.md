@@ -93,17 +93,15 @@ conda activate Bunya-ONT-Gen
 conda install -c bioconda -c conda-forge fastqc nanoplot minimap2 samtools bcftools medaka multiqc spades kraken2 mafft fasttree seqtk flye krona snpeff -y
 ```
 
-**Setup Kraken2 database:**
-
-```bash
-bash setup_kraken_db.sh
-```
-
 ---
 
 ## Usage
 
 ### Run Whole-Genome Analysis
+
+source /opt/homebrew/Caskroom/miniforge/base/bin/activate
+
+conda activate BunyaGen
 
 ```bash
 python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fasta 
