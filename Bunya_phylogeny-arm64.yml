@@ -1,0 +1,26 @@
+name: Bunya_phylogeny
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+
+dependencies:
+  # Core
+  - python>=3.10,<3.12
+  - pip
+
+  # Alignment & phylogeny (arm64 builds available)
+  - mafft>=7.520
+  - iqtree>=2.3,<3
+  - clipkit            # alignment trimming (arm64)
+  - bmge               # Java-based trimmer (noarch, works on arm64)
+  - fasttree           # keep; if solver fails, remove (see notes)
+
+  # R for visualization
+  - r-base>=4.3
+  - bioconductor-ggtree
+  - r-ape
+  - r-ggplot2
+
+  # Python libs
+  - biopython>=1.81
