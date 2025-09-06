@@ -96,7 +96,7 @@ conda install -c bioconda -c conda-forge fastqc nanoplot minimap2 samtools bcfto
 **Setup Kraken2 database:**
 
 ```bash
-bash scripts/setup_kraken_db.sh
+bash setup_kraken_db.sh
 ```
 
 ---
@@ -129,7 +129,7 @@ conda activate Bunya_phylogeny
 ### Run Phylogenetic Inference
 
 ```bash
-Bunya_phylogeny.py -r Bunyavirus.gbk -i fasta_sample.txt -o results -t 8 -b 1000
+Bunya_phylogeny.py -r multifasta_Bunyavirus.fasta -i fasta_sample.txt -o results -t 8 -b 100
 ```
 
 **Example `fasta_sample.txt`:**
