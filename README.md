@@ -158,7 +158,7 @@ Bunya_phylogeny.py -r multifasta_Bunyavirus.fasta -i fasta_sample.txt -o results
 | `-inputs`        | File with FASTQ paths             | Required  |
 | `-reference`     | Bunya reference genome            | Required  |
 | `-threads`       | CPU threads for parallel steps    | `8`       |
-| `-bootstrap`     | Phylogenetic bootstrap replicates | `1000`    |
+| `-bootstrap`     | Phylogenetic bootstrap replicates | `100`    |
 | `-min_coverage`  | Consensus calling threshold       | `20x`     |
 | `-tree_model`    | IQ-TREE substitution model        | `MFP`     |
 | `-aln_consensus` | trimAl conservation threshold     | `60%`     |
