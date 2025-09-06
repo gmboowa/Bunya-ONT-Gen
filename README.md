@@ -1,6 +1,6 @@
 # Bunya-ONT-Gen: A pipeline for viral ONT metagenomic analysis
 
-**Bunya-ONT-Gen** is a modular, end-to-end analysis pipeline designed for the characterization of viral genomes from Oxford Nanopore long-read metagenomic data. It is tailored for emerging and re-emerging viruses such as Bunyaviruses and supports everything from raw read quality control to phylogenetic tree construction.
+**Bunya-ONT-Gen** is a modular, end-to-end analysis pipeline designed for the characterization of viral genomes from Oxford Nanopore long-read metagenomic data. It is tailored for emerging & re-emerging viruses such as Bunyaviruses & supports everything from raw read quality control to phylogenetic tree construction.
 
 ---
 
@@ -20,7 +20,7 @@
 
 ![BunyaGen Workflow](BunyaGen_Workflow.png)
 
-> The diagram illustrates the nanopore metagenomic analysis pipeline, ending with phylogenetic tree construction using MAFFT and IQ-TREE.
+> The diagram illustrates the nanopore metagenomic analysis pipeline, ending with phylogenetic tree construction using MAFFT & IQ-TREE.
 
 ### Steps
 
@@ -28,10 +28,10 @@
    - FASTQ files from ONT sequencers
 
 2. **Human Reads Removal**  
-   - **Hostile**: Removes host sequences from short and long read (meta)genomes
+   - **Hostile**: Removes host sequences from short & long read (meta)genomes
 
 3. **Quality Control**  
-   - **Fastp**: Adapter trimming and quality filtering  
+   - **Fastp**: Adapter trimming & quality filtering  
    - **NanoStat**: Summary statistics of read quality  
    - **NanoPlot**: Visualization of read metrics  
    - **Filtlong**: Length-based read filtering  
@@ -57,7 +57,7 @@
 
 ### Hostile: Clean Human Reads Pipeline
 
-This pipeline removes human host reads (e.g., T2T-CHM13v2.0) from single-end ONT data using `hostile` and `minimap2`. It supports automatic reference downloading via NCBI and is built for reproducibility and ease of use.
+This pipeline removes human host reads (e.g., T2T-CHM13v2.0) from single-end ONT data using `hostile` & `minimap2`. It supports automatic reference downloading via NCBI & is built for reproducibility & ease of use.
 
 ```bash
 # Install all dependencies in a clean conda environment
@@ -76,11 +76,9 @@ conda activate hostile
 **Basic usage:**
 
 ```bash
-# General usage
-python3 hostile_clean_ont_human_minimap2.py   --fasta  <ACCESSION_OR_PATH>   -i       <INPUT_LIST>   -o       <OUTPUT_DIR>
 
 # Example using T2T-CHM13v2.0 human reference
-python3 hostile_clean_ont_human_minimap2.py   --fasta  GCF_009914755.4   -i       sample.list.txt   -o       Clean
+python3 hostile_clean_ont_human_minimap2.py --fasta GCF_009914755.4 -i sample.list.txt -o Clean
 ```
 
 **Input format:**  
