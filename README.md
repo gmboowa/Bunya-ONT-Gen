@@ -106,7 +106,7 @@ bash scripts/setup_kraken_db.sh
 ### Run Whole-Genome Analysis
 
 ```bash
-python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fasta -threads 8
+python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fasta 
 ```
 
 **Example `sample_list.txt`:**
