@@ -137,7 +137,7 @@ def process_samples(input_list, index_file, output_root):
                 processed += 1
                 print(f"Successfully processed: {sample_id}")
             except Exception as e:
-                print(f"❌ Failed to process {line}: {str(e)}")
+                print(f" Failed to process {line}: {str(e)}")
                 failed_samples.append((line, str(e)))
                 continue
 
@@ -169,7 +169,7 @@ def main():
         processed = process_samples(args.input, index_file, args.output)
         print(f"\nCompleted {processed} single-end samples successfully")
     except Exception as e:
-        print(f"\n❌ Pipeline failed: {str(e)}", file=sys.stderr)
+        print(f"\n Pipeline failed: {str(e)}", file=sys.stderr)
         sys.exit(1)
 
 if __name__ == "__main__":
