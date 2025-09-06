@@ -99,9 +99,14 @@ conda install -c bioconda -c conda-forge fastqc nanoplot minimap2 samtools bcfto
 
 ### Run Whole-Genome Analysis
 
+```bash
 source /opt/homebrew/Caskroom/miniforge/base/bin/activate
 
 conda activate BunyaGen
+
+```
+
+---
 
 ```bash
 python Bunya-ONT-Gen.py -inputs fastq_sample.txt -reference Bunya.reference.fasta 
