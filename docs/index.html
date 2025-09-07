@@ -60,12 +60,14 @@
       <div class="card">
         <h3>MultiQC</h3>
         <p>Run-wide QC summary.</p>
+        <!-- HTML renders natively; open as-is -->
         <a href="multiqc/multiqc_report.html">Open MultiQC report</a>
       </div>
       <div class="card">
         <h3>Krona charts</h3>
         <p>Interactive taxonomic composition.</p>
         <ul>
+          <!-- HTML renders natively; open as-is -->
           <li><a href="krona/SRR34843736.krona.html">SRR34843736.krona.html</a></li>
           <li><a href="krona/SRR34843737.krona.html">SRR34843737.krona.html</a></li>
           <li><a href="krona/SRR34843738.krona.html">SRR34843738.krona.html</a></li>
@@ -76,10 +78,12 @@
         <h3>Phylogeny</h3>
         <p>Trees and IQ-TREE outputs.</p>
         <ul>
-          <li><a href="phylogeny/concat.contree">concat.contree</a></li>
-          <li><a href="phylogeny/concat.iqtree">concat.iqtree</a></li>
-          <li><a href="phylogeny/concat.treefile">concat.treefile</a></li>
-          <li><a href="phylogenetic/Phylogenetic_tree.jpg">Phylogenetic_tree.jpg</a></li>
+          <!-- Text-like files use inline viewer -->
+          <li><a class="inline-view" href="phylogeny/concat.contree">concat.contree</a></li>
+          <li><a class="inline-view" href="phylogeny/concat.iqtree">concat.iqtree</a></li>
+          <li><a class="inline-view" href="phylogeny/concat.treefile">concat.treefile</a></li>
+          <!-- Images render natively -->
+          <li><a href="phylogenetic/Phylogenetic_tree.jpg" target="_blank" rel="noopener">Phylogenetic_tree.jpg</a></li>
         </ul>
       </div>
     </div>
@@ -92,38 +96,38 @@
       <div class="card">
         <h3>Variants (VCF)</h3>
         <ul>
-          <li><a href="variants/SRR34843736.vcf">SRR34843736.vcf</a></li>
-          <li><a href="variants/SRR34843737.vcf">SRR34843737.vcf</a></li>
-          <li><a href="variants/SRR34843738.vcf">SRR34843738.vcf</a></li>
-          <li><a href="variants/SRR34843739.vcf">SRR34843739.vcf</a></li>
+          <li><a class="inline-view" href="variants/SRR34843736.vcf">SRR34843736.vcf</a></li>
+          <li><a class="inline-view" href="variants/SRR34843737.vcf">SRR34843737.vcf</a></li>
+          <li><a class="inline-view" href="variants/SRR34843738.vcf">SRR34843738.vcf</a></li>
+          <li><a class="inline-view" href="variants/SRR34843739.vcf">SRR34843739.vcf</a></li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Assemblies (FASTA)</h3>
         <ul>
-          <li><a href="assemblies/SRR34843736.scaffolds.fasta">SRR34843736.scaffolds.fasta</a></li>
-          <li><a href="assemblies/SRR34843737.scaffolds.fasta">SRR34843737.scaffolds.fasta</a></li>
-          <li><a href="assemblies/SRR34843738.scaffolds.fasta">SRR34843738.scaffolds.fasta</a></li>
-          <li><a href="assemblies/SRR34843739.scaffolds.fasta">SRR34843739.scaffolds.fasta</a></li>
+          <li><a class="inline-view" href="assemblies/SRR34843736.scaffolds.fasta">SRR34843736.scaffolds.fasta</a></li>
+          <li><a class="inline-view" href="assemblies/SRR34843737.scaffolds.fasta">SRR34843737.scaffolds.fasta</a></li>
+          <li><a class="inline-view" href="assemblies/SRR34843738.scaffolds.fasta">SRR34843738.scaffolds.fasta</a></li>
+          <li><a class="inline-view" href="assemblies/SRR34843739.scaffolds.fasta">SRR34843739.scaffolds.fasta</a></li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Species abundance (CSV)</h3>
         <ul>
-          <li><a href="summary/SRR34843736.clean_species_abundance_summary.csv">SRR34843736…abundance_summary.csv</a></li>
-          <li><a href="summary/SRR34843737.clean_species_abundance_summary.csv">SRR34843737…abundance_summary.csv</a></li>
-          <li><a href="summary/SRR34843738.clean_species_abundance_summary.csv">SRR34843738…abundance_summary.csv</a></li>
-          <li><a href="summary/SRR34843739.clean_species_abundance_summary.csv">SRR34843739…abundance_summary.csv</a></li>
+          <li><a class="inline-view" href="summary/SRR34843736.clean_species_abundance_summary.csv">SRR34843736…abundance_summary.csv</a></li>
+          <li><a class="inline-view" href="summary/SRR34843737.clean_species_abundance_summary.csv">SRR34843737…abundance_summary.csv</a></li>
+          <li><a class="inline-view" href="summary/SRR34843738.clean_species_abundance_summary.csv">SRR34843738…abundance_summary.csv</a></li>
+          <li><a class="inline-view" href="summary/SRR34843739.clean_species_abundance_summary.csv">SRR34843739…abundance_summary.csv</a></li>
         </ul>
       </div>
 
       <div class="card">
         <h3>Run report (TSV)</h3>
         <ul>
-          <li><a href="report/assembly_stats_summary.tsv">assembly_stats_summary.tsv</a></li>
-          <li><a href="report/mapped_reads_summary.tsv">mapped_reads_summary.tsv</a></li>
+          <li><a class="inline-view" href="report/assembly_stats_summary.tsv">assembly_stats_summary.tsv</a></li>
+          <li><a class="inline-view" href="report/mapped_reads_summary.tsv">mapped_reads_summary.tsv</a></li>
         </ul>
       </div>
     </div>
@@ -147,6 +151,46 @@
     btn.addEventListener('click', () => {
       const next = (document.documentElement.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
       apply(next);
+    });
+  })();
+
+  // Inline viewer: open text-based results in a new tab instead of downloading
+  (function () {
+    const TEXT_EXT = new Set([
+      'vcf','fasta','fa','fna','faa','csv','tsv','txt','contree','iqtree','treefile'
+    ]);
+
+    function getExt(url){
+      const q = url.split('?')[0].split('#')[0];
+      const idx = q.lastIndexOf('.');
+      return idx >= 0 ? q.slice(idx+1).toLowerCase() : '';
+    }
+
+    async function openInline(href){
+      const ext = getExt(href);
+      const isCsv = ext === 'csv';
+      const mime = isCsv ? 'text/csv' : 'text/plain';
+
+      try {
+        const resp = await fetch(href, { credentials: 'same-origin' });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const text = await resp.text();
+        const blob = new Blob([text], { type: mime + ';charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank', 'noopener');
+      } catch (e) {
+        // Fallback: let the browser handle the URL (might download)
+        window.location.href = href;
+      }
+    }
+
+    document.addEventListener('click', function (e) {
+      const a = e.target.closest('a.inline-view');
+      if (!a) return;
+      const ext = getExt(a.getAttribute('href') || '');
+      if (!TEXT_EXT.has(ext)) return; // safety guard
+      e.preventDefault();
+      openInline(a.href);
     });
   })();
 </script>
