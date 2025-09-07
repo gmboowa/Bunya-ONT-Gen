@@ -126,7 +126,7 @@ python Bunya-ONT-Gen.py \
 ~/Sample_03_ONT_reads.fastq.gz
 ```
 ---
-## Whole-genome analysis results layout
+### Whole-genome analysis results layout
 
 ```bash
 results/
@@ -143,7 +143,7 @@ results/
 
 ---
 
-## Concatenated phylogeny from VCFs
+### Concatenated phylogeny from VCFs
 
 You will build a single phylogeny using consensus sequences per segment (**L/M/S**) concatenated per sample, with partitions preserved & bootstrap support.
 
@@ -171,7 +171,7 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
   chmod +x build_bunya_concat_tree.sh
   ```
 
-## Inputs
+### Inputs
 
 1. **VCF list file** (`vcfs.txt`): one **absolute path** to a VCF per line  
    _or_ `sample</>sample.vcf[.gz]`.
@@ -190,7 +190,7 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
 
 > If you don’t pass `--segments`, the script auto-detects the top 3 contigs in the first VCF; pinning avoids mismatches.
 
-## Run examples
+### Run examples
 
 **With automatic NCBI reference fetch & bootstrap 1000:**
 ```bash
@@ -271,9 +271,9 @@ All static reports & pipeline outputs are published via GitHub Pages:
 https://gmboowa.github.io/Bunya-ONT-Gen/
 
 
-# Custom SnpEff Database for Bunyamwera Orthobunyavirus (macOS: Apple Silicon & Intel)
+## Custom SnpEff Database for Bunyamwera Orthobunyavirus (macOS: Apple Silicon & Intel)
 
-## Detect your Mac architecture
+### Detect your Mac architecture
 
 ```bash
 uname -m
@@ -283,7 +283,7 @@ uname -m
 
 ---
 
-## Apple Silicon (arm64) setup
+### Apple Silicon (arm64) setup
 
 ## <a name="apple-create-conda-env"></a>1) Create Conda env with SnpEff, Java & NCBI EDirect
 
@@ -303,7 +303,7 @@ snpEff -version
 esearch -help >/dev/null
 ```
 
-## Make a writable SnpEff home
+### Make a writable SnpEff home
 
 ```bash
 SNPEFF_SRC="$(ls -d "$CONDA_PREFIX"/share/snpeff-* | head -n1)"
@@ -316,7 +316,7 @@ echo 'export SNPEFF_HOME="$HOME/snpeff"' >> ~/.zshrc
 echo 'export SNPEFF_HOME="$HOME/snpeff"' >> ~/.bashrc
 ```
 
-## Build a Bunyamwera DB from GenBank
+### Build a Bunyamwera DB from GenBank
 
 Use the *RefSeq* accessions (L/M/S segments):
 
@@ -351,7 +351,7 @@ snpEff build \
 ls -lh "$SNPEFF_HOME/data/$DB/snpEffectPredictor.bin"
 ```
 
-## Annotate your VCFs
+### Annotate your VCFs
 
 ```bash
 snpEff ann \
@@ -367,7 +367,7 @@ snpEff ann \
 
 ---
 
-## (Optional) Force x86_64 packages on an Apple Silicon Mac
+### (Optional) Force x86_64 packages on an Apple Silicon Mac
 
 ```bash
 export CONDA_SUBDIR=osx-64
@@ -382,7 +382,7 @@ snpEff -version
 esearch -help >/dev/null
 ```
 
-## Make a writable SnpEff home (x86_64 env)
+### Make a writable SnpEff home (x86_64 env)
 
 ```bash
 SNPEFF_SRC="$(ls -d "$CONDA_PREFIX"/share/snpeff-* | head -n1)"
@@ -391,7 +391,7 @@ export SNPEFF_HOME="$HOME/snpeff"
 echo 'export SNPEFF_HOME="$HOME/snpeff"' >> ~/.bashrc
 ```
 
-## Build a Bunyamwera DB from GenBank (x86_64 env)
+### Build a Bunyamwera DB from GenBank (x86_64 env)
 
 ```bash
 DB=bunyamwera_ref
@@ -413,7 +413,7 @@ snpEff build \
 ls -lh "$SNPEFF_HOME/data/$DB/snpEffectPredictor.bin"
 ```
 
-## <a name="intel-annotate"></a>4) Annotate your VCFs (either arch)
+### <a name="intel-annotate"></a>4) Annotate your VCFs (either arch)
 
 ```bash
 # STDIN method
@@ -429,7 +429,7 @@ snpEff ann -c "$SNPEFF_HOME/snpEff.config" -dataDir "$SNPEFF_HOME/data" \
 
 ---
 
-## One-shot builder script
+### One-shot builder script
 
 Save as `build_snpeff_bunyamwera.sh` and run once per machine.
 
