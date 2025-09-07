@@ -1,0 +1,67 @@
+Taxon_name,Percentage,Reads_covered
+root,97.65,31179
+Viruses,97.65,31179
+Riboviria,97.65,31177
+Orthornavirae,97.65,31177
+Negarnaviricota,97.65,31177
+Orthobunyavirus,97.64,31176
+Bunyaviricetes,97.64,31176
+Polyploviricotina,97.64,31176
+Peribunyaviridae,97.64,31176
+Elliovirales,97.64,31176
+Orthobunyavirus oropoucheense,95.62,30531
+Oropouche virus,95.62,30531
+unclassified,2.35,749
+Orthobunyavirus ingwavumaense,0.32,103
+Ingwavuma virus,0.32,103
+Orthobunyavirus kaengkhoiense,0.12,39
+Kaeng Khoi virus,0.12,39
+Orthobunyavirus jatobalense,0.12,37
+Jatobal virus,0.12,37
+Orthobunyavirus ainoense,0.03,10
+Aino virus,0.03,10
+Orthobunyavirus patoisense,0.03,9
+Orthobunyavirus gamboaense,0.03,8
+Iaco virus,0.02,7
+Orthobunyavirus iacoense,0.02,7
+Gamboa virus,0.02,7
+Orthobunyavirus buttonwillowense,0.02,6
+Buttonwillow virus,0.02,6
+Patois virus,0.02,5
+Zegla virus,0.01,4
+Orthobunyavirus koongoli,0.01,3
+Koongol virus,0.01,3
+Orthobunyavirus guaroaense,0.01,3
+Guaroa virus,0.01,3
+Simplexvirus,0.01,2
+Simplexvirus pteropodidalpha2,0.01,2
+Peploviricota,0.01,2
+Duplodnaviria,0.01,2
+Utinga virus,0.01,2
+Orthoherpesviridae,0.01,2
+Orthobunyavirus utingaense,0.01,2
+pteropodid alphaherpesvirus 2,0.01,2
+Benfica virus,0.01,2
+Guama virus,0.01,2
+Heunggongvirae,0.01,2
+Alphaherpesvirinae,0.01,2
+Herviviricetes,0.01,2
+Herpesvirales,0.01,2
+Orthobunyavirus benficaense,0.01,2
+Orthobunyavirus guamaense,0.01,2
+Orthobunyavirus encephalitidis,0.0,1
+Henipavirus cedarense,0.0,1
+Balagodu virus,0.0,1
+Guaratuba virus,0.0,1
+Macaua virus,0.0,1
+Monjiviricetes,0.0,1
+Mononegavirales,0.0,1
+Orthobunyavirus guaratubaense,0.0,1
+Henipavirus,0.0,1
+Orthoparamyxovirinae,0.0,1
+California encephalitis virus,0.0,1
+Orthobunyavirus macauaense,0.0,1
+Haploviricotina,0.0,1
+Orthobunyavirus balagoduense,0.0,1
+Paramyxoviridae,0.0,1
+Cedar virus,0.0,1
