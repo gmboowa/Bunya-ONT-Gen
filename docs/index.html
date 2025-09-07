@@ -1,0 +1,72 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Bunya-ONT-Gen • Results</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --fg:#0b1220; --muted:#5b667a; --link:#1f6feb; --bg:#f7f9fc; }
+  body { font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Helvetica Neue,Arial,Noto Sans; margin:0; color:var(--fg); background:var(--bg) }
+  header { padding:2.25rem 1.25rem 1rem; max-width:980px; margin:0 auto }
+  h1 { margin:0 0 .25rem; font-size:1.75rem }
+  .muted { color:var(--muted); font-size:.95rem }
+  main { max-width:980px; margin:0 auto; padding:0 1.25rem 3rem }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-top:1rem }
+  .card { background:#fff; border:1px solid #e5e9f2; border-radius:14px; padding:14px 14px 12px }
+  .card h3 { margin:0 0 6px; font-size:1.05rem }
+  .card p { margin:0 0 8px; color:var(--muted); font-size:.95rem }
+  a { color:var(--link); text-decoration:none }
+  a:hover { text-decoration:underline }
+  footer { max-width:980px; margin:0 auto; padding:1rem 1.25rem 2.5rem; color:var(--muted); font-size:.9rem }
+  .small { font-size:.9rem }
+</style>
+
+<header>
+  <h1>Bunya-ONT-Gen results</h1>
+  <div class="muted">Static outputs published via GitHub Pages</div>
+</header>
+
+<main>
+  <section>
+    <h2 class="small">Key reports</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>MultiQC</h3>
+        <p>Run-wide QC summary with per-step metrics.</p>
+        <a href="multiqc/multiqc_report.html">Open MultiQC report</a>
+      </div>
+      <div class="card">
+        <h3>Krona charts</h3>
+        <p>Interactive taxonomic composition (HTML).</p>
+        <a href="krona/">Browse Krona HTML</a>
+      </div>
+      <div class="card">
+        <h3>Phylogeny</h3>
+        <p>Trees, Newick files, and rendered figures.</p>
+        <a href="phylogeny/">Open phylogeny folder</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:1.25rem">
+    <h2 class="small">All result folders</h2>
+    <div class="grid">
+      <div class="card"><h3>assemblies/</h3><p>Assembled contigs/genomes and logs.</p><a href="assemblies/">Open</a></div>
+      <div class="card"><h3>variants/</h3><p>VCFs, consensus sequences, and annotations.</p><a href="variants/">Open</a></div>
+      <div class="card"><h3>summary/</h3><p>Run summaries, tables, and per-sample overviews.</p><a href="summary/">Open</a></div>
+      <div class="card"><h3>report/</h3><p>Compiled run report (if present) and assets.</p><a href="report/">Open</a></div>
+      <div class="card"><h3>multiqc/</h3><p>Raw MultiQC assets (CSS/JS/data).</p><a href="multiqc/">Open</a></div>
+      <div class="card"><h3>krona/</h3><p>Self-contained Krona HTML files.</p><a href="krona/">Open</a></div>
+    </div>
+  </section>
+
+  <section style="margin-top:1.25rem">
+    <div class="card">
+      <h3>Browse everything</h3>
+      <p>Open the root results directory to explore all files.</p>
+      <a href="./">Browse all result files</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div>Tip: keep a <code>.nojekyll</code> file in <code>docs/</code> so assets with underscores aren’t stripped.</div>
+</footer>
