@@ -270,6 +270,264 @@ All static reports & pipeline outputs are published via GitHub Pages:
 
 https://gmboowa.github.io/Bunya-ONT-Gen/
 
+
+# Custom SnpEff Database for Bunyamwera Orthobunyavirus (macOS: Apple Silicon & Intel)
+
+## Detect your Mac architecture
+
+```bash
+uname -m
+# arm64  -> Apple Silicon (M1/M2/M3)
+# x86_64 -> Intel
+```
+
+---
+
+## Apple Silicon (arm64) setup
+
+### <a name="apple-create-conda-env"></a>1) Create Conda env with SnpEff, Java & NCBI EDirect
+
+```bash
+# Initialize Conda for this shell (run once, then reopen the terminal)
+conda init zsh   # or: conda init bash
+```
+
+```bash
+# Create & activate env
+conda create -n BunyaGen -c bioconda -c conda-forge snpeff openjdk=21 entrez-direct -y
+conda activate BunyaGen
+
+# Sanity checks
+which snpEff
+snpEff -version
+esearch -help >/dev/null
+```
+
+## Make a writable SnpEff home
+
+```bash
+SNPEFF_SRC="$(ls -d "$CONDA_PREFIX"/share/snpeff-* | head -n1)"
+cp -R "$SNPEFF_SRC" "$HOME/snpeff"
+export SNPEFF_HOME="$HOME/snpeff"
+
+# Persist for your shell (pick ONE of the following depending on your shell)
+echo 'export SNPEFF_HOME="$HOME/snpeff"' >> ~/.zshrc
+# or:
+echo 'export SNPEFF_HOME="$HOME/snpeff"' >> ~/.bashrc
+```
+
+## Build a Bunyamwera DB from GenBank
+
+Use the *RefSeq* accessions (L/M/S segments):
+
+- **L**: `NC_001925.1`  
+- **M**: `NC_001926.1`  
+- **S**: `NC_001927.1`
+
+```bash
+DB=bunyamwera_ref
+
+# Register a readable name in the config
+echo "$DB.genome : Bunyamwera orthobunyavirus (RefSeq NC_001925/6/7)" >> "$SNPEFF_HOME/snpEff.config"
+
+# Create data folder and fetch GenBank records
+mkdir -p "$SNPEFF_HOME/data/$DB"
+GBK="$SNPEFF_HOME/data/$DB/genes.gbk"
+: > "$GBK"
+for ACC in NC_001925.1 NC_001926.1 NC_001927.1; do
+  efetch -db nucleotide -format gbwithparts -id "$ACC" >> "$GBK"
+done
+
+# Should print '3'
+grep -c '^LOCUS' "$GBK"
+
+# Build the database
+snpEff build \
+  -c "$SNPEFF_HOME/snpEff.config" \
+  -dataDir "$SNPEFF_HOME/data" \
+  -genbank -v "$DB"
+
+# You should now have:
+ls -lh "$SNPEFF_HOME/data/$DB/snpEffectPredictor.bin"
+```
+
+## Annotate your VCFs
+
+```bash
+snpEff ann \
+  -c "$SNPEFF_HOME/snpEff.config" \
+  -dataDir "$SNPEFF_HOME/data" \
+  -i vcf \
+  -s snpeff_bunyamwera.html \
+  -csvStats snpeff_bunyamwera.csv \
+  "$DB" \
+  ~/Sample_variants.vcf \
+  > Sample.snpeff.vcf
+```
+
+---
+
+## (Optional) Force x86_64 packages on an Apple Silicon Mac
+
+```bash
+export CONDA_SUBDIR=osx-64
+```
+
+```bash
+conda create -n BunyaGen -c bioconda -c conda-forge snpeff openjdk=21 entrez-direct -y
+conda activate BunyaGen
+
+which snpEff
+snpEff -version
+esearch -help >/dev/null
+```
+
+## Make a writable SnpEff home (x86_64 env)
+
+```bash
+SNPEFF_SRC="$(ls -d "$CONDA_PREFIX"/share/snpeff-* | head -n1)"
+cp -R "$SNPEFF_SRC" "$HOME/snpeff"
+export SNPEFF_HOME="$HOME/snpeff"
+echo 'export SNPEFF_HOME="$HOME/snpeff"' >> ~/.bashrc
+```
+
+## Build a Bunyamwera DB from GenBank (x86_64 env)
+
+```bash
+DB=bunyamwera_ref
+echo "$DB.genome : Bunyamwera orthobunyavirus (RefSeq NC_001925/6/7)" >> "$SNPEFF_HOME/snpEff.config"
+
+mkdir -p "$SNPEFF_HOME/data/$DB"
+GBK="$SNPEFF_HOME/data/$DB/genes.gbk"
+: > "$GBK"
+for ACC in NC_001925.1 NC_001926.1 NC_001927.1; do
+  efetch -db nucleotide -format gbwithparts -id "$ACC" >> "$GBK"
+done
+grep -c '^LOCUS' "$GBK"
+
+snpEff build \
+  -c "$SNPEFF_HOME/snpEff.config" \
+  -dataDir "$SNPEFF_HOME/data" \
+  -genbank -v "$DB"
+
+ls -lh "$SNPEFF_HOME/data/$DB/snpEffectPredictor.bin"
+```
+
+### <a name="intel-annotate"></a>4) Annotate your VCFs (either arch)
+
+```bash
+# STDIN method
+snpEff ann -c "$SNPEFF_HOME/snpEff.config" -dataDir "$SNPEFF_HOME/data" \
+  -s snpeff_bunyamwera.html -csvStats snpeff_bunyamwera.csv \
+  "$DB" < ~/Sample.vcf > Sample.snpeff.vcf
+
+# or positional arg with input format
+snpEff ann -c "$SNPEFF_HOME/snpEff.config" -dataDir "$SNPEFF_HOME/data" \
+  -i vcf -s snpeff_bunyamwera.html -csvStats snpeff_bunyamwera.csv \
+  "$DB" ~/Sample.vcf > Sample.snpeff.vcf
+```
+
+---
+
+## One-shot builder script
+
+Save as `build_snpeff_bunyamwera.sh` and run once per machine.
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+DB="${1:-bunyamwera_ref}"
+
+# Require snpEff + entrez-direct in current conda env
+command -v snpEff >/dev/null || { echo "Install snpEff in this env"; exit 1; }
+command -v efetch  >/dev/null || { echo "Install entrez-direct in this env"; exit 1; }
+
+SNPEFF_SRC="$(ls -d "$CONDA_PREFIX"/share/snpeff-* | head -n1)"
+SNPEFF_HOME="${SNPEFF_HOME:-$HOME/snpeff}"
+[[ -d "$SNPEFF_HOME" ]] || cp -R "$SNPEFF_SRC" "$SNPEFF_HOME"
+
+grep -q "^$DB\.genome" "$SNPEFF_HOME/snpEff.config" \
+  || echo "$DB.genome : Bunyamwera orthobunyavirus (RefSeq NC_001925/6/7)" >> "$SNPEFF_HOME/snpEff.config"
+
+mkdir -p "$SNPEFF_HOME/data/$DB"
+GBK="$SNPEFF_HOME/data/$DB/genes.gbk"
+: > "$GBK"
+for ACC in NC_001925.1 NC_001926.1 NC_001927.1; do
+  echo "Fetching $ACC ..."
+  efetch -db nucleotide -format gbwithparts -id "$ACC" >> "$GBK"
+done
+
+echo "Records: $(grep -c '^LOCUS' "$GBK") (expect 3)"
+snpEff build -c "$SNPEFF_HOME/snpEff.config" -dataDir "$SNPEFF_HOME/data" -genbank -v "$DB"
+
+echo "Built $DB at $SNPEFF_HOME/data/$DB"
+echo "Annotate with:"
+echo "  snpEff ann -c $SNPEFF_HOME/snpEff.config -dataDir $SNPEFF_HOME/data $DB < input.vcf > output.vcf"
+```
+
+Make it executable & run:
+
+```bash
+chmod +x build_snpeff_bunyamwera.sh
+./build_snpeff_bunyamwera.sh
+```
+
+---
+
+## Common pitfalls & fixes
+
+- **“Unknown parameter … .vcf”**  
+  Put the genome ID before the VCF or use STDIN. Also consider `-i vcf`.
+
+- **`Cannot read .../genes.gbk`**  
+  File must be named **`genes.gbk`** (not `genes.gb`). Use `-format gbwithparts` when fetching.
+
+- **No annotations / many `INTERGENIC` calls**  
+  Your VCF `CHROM` names must match **`NC_001925.1`**, **`NC_001926.1`**, **`NC_001927.1`**. Remap with:
+  ```bash
+  # map.txt lines: old_name <TAB> NC_001925.1   (etc.)
+  bcftools annotate --rename-chrs map.txt -o fixed.vcf -O v input.vcf
+  ```
+
+- **Permission denied editing SnpEff config**  
+  Don’t edit the conda share dir. Use a writable copy in `~/snpeff` and pass `-c` & `-dataDir`.
+
+- **Apple Silicon vs Intel**  
+  Commands are the same. If mixing tools that lack native arm64 builds, you can set `CONDA_SUBDIR=osx-64` before creating a separate env (rarely needed for SnpEff/EDirect).
+
+- **Java memory (unlikely for tiny viral DBs)**  
+  You can set `JAVA_TOOL_OPTIONS="-Xmx2g"` if ever needed.
+
+---
+
+## Verification checklist
+
+```bash
+# DB registered?
+grep '^bunyamwera_ref\.genome' "$SNPEFF_HOME/snpEff.config"
+
+# Predictor exists?
+ls -lh "$SNPEFF_HOME/data/bunyamwera_ref/snpEffectPredictor.bin"
+
+# Minimal test variant (on L segment)
+printf "##fileformat=VCFv4.2\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\nNC_001925.1\t100\t.\tA\tG\t.\t.\t.\n" > test.vcf
+snpEff ann -c "$SNPEFF_HOME/snpEff.config" -dataDir "$SNPEFF_HOME/data" bunyamwera_ref < test.vcf > test.ann.vcf
+```
+
+---
+
+## Use with BunyaGen
+
+Point your BunyaGen annotation step to `bunyamwera_ref` and the config/data under `~/snpeff`:
+
+```bash
+snpEff ann \
+  -c "$SNPEFF_HOME/snpEff.config" -dataDir "$SNPEFF_HOME/data" \
+  bunyamwera_ref < your_sample.vcf > your_sample.snpeff.vcf
+```
+
+
 ---
 ## Troubleshooting
 
