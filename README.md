@@ -2,8 +2,6 @@
 
 **Bunya-ONT-Gen** is a modular, end-to-end pipeline for characterizing viral genomes from Oxford Nanopore (ONT) metagenomic data. It covers host read removal, QC, assembly, variant/annotation, and a **single concatenated phylogeny** built from the three Bunyamwera segments.
 
-> This README includes a ready-to-run phylogeny script: `build_bunya_concat_tree.sh` (IQ-TREE + UFboot/SH-aLRT, with FastTree fallback).
-
 ---
 
 ## Table of Contents
