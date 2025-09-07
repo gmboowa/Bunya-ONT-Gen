@@ -17,8 +17,6 @@
   a { color:var(--link); text-decoration:none }
   a:hover { text-decoration:underline }
   ul { margin:.5rem 0 0 1.1rem }
-  footer { max-width:980px; margin:0 auto; padding:1rem 1.25rem 2.5rem; color:var(--muted); font-size:.9rem }
-  .small { font-size:.9rem }
 </style>
 
 <header>
@@ -71,6 +69,17 @@
           <li><a href="variants/SRR34843739.vcf">SRR34843739.vcf</a></li>
         </ul>
       </div>
+
+      <div class="card">
+        <h3>Assemblies (FASTA)</h3>
+        <ul>
+          <li><a href="assemblies/SRR34843736.scaffolds.fasta">SRR34843736.scaffolds.fasta</a></li>
+          <li><a href="assemblies/SRR34843737.scaffolds.fasta">SRR34843737.scaffolds.fasta</a></li>
+          <li><a href="assemblies/SRR34843738.scaffolds.fasta">SRR34843738.scaffolds.fasta</a></li>
+          <li><a href="assemblies/SRR34843739.scaffolds.fasta">SRR34843739.scaffolds.fasta</a></li>
+        </ul>
+      </div>
+
       <div class="card">
         <h3>Species abundance (CSV)</h3>
         <ul>
@@ -80,17 +89,13 @@
           <li><a href="summary/SRR34843739.clean_species_abundance_summary.csv">SRR34843739…abundance_summary.csv</a></li>
         </ul>
       </div>
+
       <div class="card">
         <h3>Run report (TSV)</h3>
         <ul>
           <li><a href="report/assembly_stats_summary.tsv">assembly_stats_summary.tsv</a></li>
           <li><a href="report/mapped_reads_summary.tsv">mapped_reads_summary.tsv</a></li>
         </ul>
-      </div>
-      <div class="card">
-        <h3>Assemblies</h3>
-        <p>Open folder to browse contigs/genomes.</p>
-        <a href="assemblies/">Open assemblies/</a>
       </div>
     </div>
   </section>
@@ -103,7 +108,3 @@
     </div>
   </section>
 </main>
-
-<footer>
-  <div>Tip: keep a <code>.nojekyll</code> file in <code>docs/</code> so assets with underscores aren’t stripped.</div>
-</footer>
