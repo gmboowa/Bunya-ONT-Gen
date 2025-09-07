@@ -263,6 +263,14 @@ bunya_tree_out_concat/
 
 ---
 
+
+## Live reports & outputs
+
+All static reports & pipeline outputs are published via GitHub Pages:
+
+https://gmboowa.github.io/Bunya-ONT-Gen/
+
+---
 ## Troubleshooting
 
 | Symptom | Fix |
