@@ -1,5 +1,0 @@
-Module	Section	Sample Name	Source
-FastQC	all_sections	SRR34843736	/Users/gmboowa/Bunya-ONT-Gen/results/qc/SRR34843736.clean_fastqc.zip
-FastQC	all_sections	SRR34843737	/Users/gmboowa/Bunya-ONT-Gen/results/qc/SRR34843737.clean_fastqc.zip
-FastQC	all_sections	SRR34843738	/Users/gmboowa/Bunya-ONT-Gen/results/qc/SRR34843738.clean_fastqc.zip
-FastQC	all_sections	SRR34843739	/Users/gmboowa/Bunya-ONT-Gen/results/qc/SRR34843739.clean_fastqc.zip
