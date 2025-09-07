@@ -30,8 +30,8 @@
 - Optimized for **ONT** long-read data.
 - **Human host read removal** before downstream analysis.
 - QC summary with FastQC/NanoPlot/MultiQC.
-- De novo assembly and polishing.
-- Variant calling & functional annotation (snpEff).
+- *De novo* assembly & polishing.
+- Variant calling & functional annotation.
 - **Concatenated phylogeny across the three Bunyamwera segments** (L/M/S) with partitioned models & bootstrap support.
 
 ---
@@ -98,8 +98,8 @@ python3 hostile_clean_ont_human_minimap2.py \
 
 `Bunya_ont_sample.list.txt` format:
 ```
-/abs/path/sample1.fastq.gz
-/abs/path/sample2.fastq.gz
+~/sample1.fastq.gz
+~/sample2.fastq.gz
 ```
 
 ---
