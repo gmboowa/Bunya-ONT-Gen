@@ -1,0 +1,149 @@
+Taxon_name,Percentage,Reads_covered
+root,97.46,254073
+Viruses,97.46,254073
+Orthornavirae,97.45,254049
+Riboviria,97.45,254049
+Negarnaviricota,97.45,254046
+Peribunyaviridae,97.44,254038
+Elliovirales,97.44,254038
+Bunyaviricetes,97.44,254038
+Polyploviricotina,97.44,254038
+Orthobunyavirus,97.44,254035
+Oropouche virus,94.9,247409
+Orthobunyavirus oropoucheense,94.9,247409
+unclassified,2.54,6632
+Ingwavuma virus,0.4,1051
+Orthobunyavirus ingwavumaense,0.4,1051
+Kaeng Khoi virus,0.16,429
+Orthobunyavirus kaengkhoiense,0.16,429
+Jatobal virus,0.07,173
+Orthobunyavirus jatobalense,0.07,173
+Orthobunyavirus patoisense,0.04,97
+Aino virus,0.03,87
+Orthobunyavirus ainoense,0.03,87
+Iaco virus,0.03,77
+Orthobunyavirus iacoense,0.03,77
+Patois virus,0.03,76
+Orthobunyavirus gamboaense,0.02,57
+Gamboa virus,0.02,57
+Koongol virus,0.02,44
+Orthobunyavirus koongoli,0.02,44
+Orthobunyavirus guaroaense,0.02,41
+Guaroa virus,0.02,41
+Orthobunyavirus bobayaense,0.01,27
+Bobaya virus,0.01,27
+Buttonwillow virus,0.01,23
+Orthobunyavirus buttonwillowense,0.01,23
+Orthobunyavirus tataguineense,0.01,22
+Tataguine virus,0.01,22
+Zegla virus,0.01,21
+California encephalitis virus,0.01,16
+Duplodnaviria,0.01,16
+Orthobunyavirus encephalitidis,0.01,16
+Heunggongvirae,0.01,16
+Guama virus,0.01,14
+Orthobunyavirus guamaense,0.01,14
+Orthobunyavirus benficaense,0.0,13
+Benfica virus,0.0,13
+Orthobunyavirus bushbushense,0.0,12
+Peploviricota,0.0,12
+pteropodid alphaherpesvirus 2,0.0,12
+Herviviricetes,0.0,12
+Simplexvirus,0.0,12
+Alphaherpesvirinae,0.0,12
+Simplexvirus pteropodidalpha2,0.0,12
+Orthoherpesviridae,0.0,12
+Herpesvirales,0.0,12
+Bushbush virus,0.0,11
+Schmallenberg virus,0.0,8
+Orthoparamyxovirinae,0.0,8
+Cedar virus,0.0,8
+Orthobunyavirus schmallenbergense,0.0,8
+Monjiviricetes,0.0,8
+Mononegavirales,0.0,8
+Paramyxoviridae,0.0,8
+Haploviricotina,0.0,8
+Henipavirus,0.0,8
+Henipavirus cedarense,0.0,8
+Guaratuba virus,0.0,7
+Orthobunyavirus guaratubaense,0.0,7
+Macaua virus,0.0,6
+Orthobunyavirus macauaense,0.0,6
+Orthobunyavirus squalofluvii,0.0,5
+Shark River virus,0.0,5
+Uroviricota,0.0,4
+Mahogany hammock virus,0.0,4
+Orthobunyavirus simbuense,0.0,4
+Caudoviricetes,0.0,4
+Orthobunyavirus mahoganyense,0.0,4
+Orthobunyavirus utingaense,0.0,3
+Utinga virus,0.0,3
+Chikungunya virus,0.0,2
+Alphavirus chikungunya,0.0,2
+Streptomyces phage Blueeyedbeauty,0.0,2
+Kitrinoviricota,0.0,2
+Orthobunyavirus shuniense,0.0,2
+Loccivirinae,0.0,2
+Orthobunyavirus sangoense,0.0,2
+Alsuviricetes,0.0,2
+Annadreamyvirus,0.0,2
+Manzanilla virus,0.0,2
+Orthobunyavirus northwayense,0.0,2
+Alphavirus,0.0,2
+Orthobunyavirus manzanillaense,0.0,2
+Martellivirales,0.0,2
+Annadreamyvirus blueeyedbeauty,0.0,2
+Stanwilliamsviridae,0.0,2
+Apeu virus,0.0,2
+Northway virus,0.0,2
+Balagodu virus,0.0,2
+Bamfordvirae,0.0,2
+Orthobunyavirus infirmati,0.0,2
+Varidnaviria,0.0,2
+Togaviridae,0.0,2
+Orthobunyavirus achiotei,0.0,2
+Sango virus,0.0,2
+Orthobunyavirus apeuense,0.0,2
+Orthobunyavirus balagoduense,0.0,2
+Infirmatus virus,0.0,2
+Polisuviricotina,0.0,1
+Saldibavirus,0.0,1
+Prasinovirus,0.0,1
+Preplasmiviricota,0.0,1
+Yellowstone lake phycodnavirus 3,0.0,1
+Rowavirales,0.0,1
+Saldibavirus HRTV4,0.0,1
+Saldibavirus natrii,0.0,1
+Phycodnaviridae,0.0,1
+Southern Psittacara leucophthalmus aviadenovirus,0.0,1
+Acadianvirus,0.0,1
+Pharingeaviricetes,0.0,1
+Pacuvirus chilibreense,0.0,1
+Acara virus,0.0,1
+Adenoviridae,0.0,1
+Algavirales,0.0,1
+Anadyr virus,0.0,1
+Aviadenovirus,0.0,1
+Aviadenovirus leucophthalmi,0.0,1
+Bclasvirinae,0.0,1
+Chilibre virus,0.0,1
+Haloferuviridae,0.0,1
+Halorubrum tailed virus 4,0.0,1
+Juan Diaz virus,0.0,1
+Kirjokansivirales,0.0,1
+Megaviricetes,0.0,1
+Mermet virus,0.0,1
+Mycobacterium phage Baee,0.0,1
+Nucleocytoviricota,0.0,1
+Oriboca virus,0.0,1
+Orthobunyavirus acaraense,0.0,1
+Orthobunyavirus anadyrense,0.0,1
+Acadianvirus baee,0.0,1
+Orthobunyavirus caraparuense,0.0,1
+Orthobunyavirus guajaraense,0.0,1
+Orthobunyavirus juandiazense,0.0,1
+Orthobunyavirus madridense,0.0,1
+Orthobunyavirus mermetense,0.0,1
+Orthobunyavirus oribocaense,0.0,1
+Pacuvirus,0.0,1
+unclassified Prasinovirus,0.0,1
