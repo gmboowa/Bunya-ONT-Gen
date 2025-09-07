@@ -1,6 +1,6 @@
 # Bunya-ONT-Gen: A pipeline for viral ONT metagenomic analysis
 
-**Bunya-ONT-Gen** is a modular, end-to-end pipeline for characterizing viral genomes from Oxford Nanopore (ONT) metagenomic data. It covers host read removal, QC, assembly, variant/annotation, and a **single concatenated phylogeny** built from the three Bunyamwera segments.
+**Bunya-ONT-Gen** is a modular, end-to-end pipeline for characterizing viral genomes from Oxford Nanopore (ONT) metagenomic data. It covers host read removal, QC, assembly, variant/annotation & a **single concatenated phylogeny** built from the three Bunyamwera segments.
 
 ---
 
@@ -32,7 +32,7 @@
 - QC summary with FastQC/NanoPlot/MultiQC.
 - De novo assembly and polishing.
 - Variant calling & functional annotation (snpEff).
-- **Concatenated phylogeny across the three Bunyamwera segments** (L/M/S) with partitioned models and bootstrap support.
+- **Concatenated phylogeny across the three Bunyamwera segments** (L/M/S) with partitioned models & bootstrap support.
 
 ---
 
@@ -106,7 +106,7 @@ python3 hostile_clean_ont_human_minimap2.py \
 
 ## Whole-genome analysis
 
-Activate the env and run the main pipeline script:
+Activate the env & run the main pipeline script:
 
 ```bash
 # Activate
@@ -121,16 +121,31 @@ python Bunya-ONT-Gen.py \
 
 `fastq_sample.txt` example:
 ```
-/abs/path/Sample_01_ONT_reads.fastq.gz
-/abs/path/Sample_02_ONT_reads.fastq.gz
-/abs/path/Sample_03_ONT_reads.fastq.gz
+~/Sample_01_ONT_reads.fastq.gz
+~/Sample_02_ONT_reads.fastq.gz
+~/Sample_03_ONT_reads.fastq.gz
+```
+---
+## Whole-genome analysis results layout
+
+```bash
+results/
+├── 00_RawDataQC/          # FastQC/NanoPlot reports
+├── 01_Assemblies/         # Flye & Medaka outputs
+├── 02_Variants/           # VCF files & annotations (snpEff)
+├── 03_Phylogeny/
+│   ├── alignment.fasta    # MAFFT MSA
+│   ├── iqtree_results/    # Tree files with support
+│   └── phylogeny.pdf      # ggtree visualization (optional)
+├── 04_Taxonomy/           # Kraken2/Krona reports
+└── reports/               # MultiQC + summary
 ```
 
 ---
 
 ## Concatenated phylogeny from VCFs
 
-You will build a single phylogeny using consensus sequences per segment (**L/M/S**) concatenated per sample, with partitions preserved and bootstrap support.
+You will build a single phylogeny using consensus sequences per segment (**L/M/S**) concatenated per sample, with partitions preserved & bootstrap support.
 
 ### Script: `build_bunya_concat_tree.sh`
 
@@ -139,9 +154,9 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
   - Per-segment MAFFT alignment.
   - Concatenate segments by sample name (**robust to record order**).
   - IQ-TREE with **UFboot + SH-aLRT** (bootstrap), partitioned by segment.
-  - **Automatic fallback** to FastTree with `-boot` if IQ-TREE fails (rare macOS crashes).
+  - **Automatic fallback** to FastTree with `-boot` if IQ-TREE fails.
 
-- **Install the deps**
+- **Install the dependences**
   ```bash
   mamba install -c bioconda -c conda-forge \
     bcftools samtools mafft seqkit iqtree fasttree entrez-direct
@@ -159,14 +174,15 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
 ### Inputs
 
 1. **VCF list file** (`vcfs.txt`): one **absolute path** to a VCF per line  
-   _or_ `sample<TAB>/abs/path/sample.vcf[.gz]`.
+   _or_ `sample</>sample.vcf[.gz]`.
 
    Example (4 samples):
    ```
-   /Users/you/Desktop/Bunyamwera/SRR34843736.vcf
-   /Users/you/Desktop/Bunyamwera/SRR34843737.vcf
-   /Users/you/Desktop/Bunyamwera/SRR34843738.vcf
-   /Users/you/Desktop/Bunyamwera/SRR34843739.vcf
+   ~/Bunyamwera/SRR34843736.vcf
+   ~/Bunyamwera/SRR34843737.vcf
+   ~/Bunyamwera/SRR34843738.vcf
+   ~/Bunyamwera/SRR34843739.vcf
+   
    ```
 
 2. **Segment accessions** (recommended to **pin**):  
@@ -179,7 +195,7 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
 **With automatic NCBI reference fetch & bootstrap 1000:**
 ```bash
 ./build_bunya_concat_tree.sh \
-  -l /Users/you/Bunya-ONT-Gen/vcfs.txt \
+  -l ~/vcfs.txt \
   -o bunya_tree_out_concat \
   --segments MF926354.1,KP795084.1,KP795093.1 \
   --auto-ref \
@@ -244,23 +260,6 @@ bunya_tree_out_concat/
 3. (Optional) Add a color strip or dataset for sample groups (by sample naming).
 
 > If the tree looks star-like or shows no support, check `logs/concat.iqtree.log` and the `DIAG: concat.aln.fa` line printed by the script. If `unique=1` or `varSites=0`, the samples are identical across L/M/S after filtering/masking.
-
----
-
-## Results layout
-
-```bash
-results/
-├── 00_RawDataQC/          # FastQC/NanoPlot reports
-├── 01_Assemblies/         # Flye & Medaka outputs
-├── 02_Variants/           # VCF files & annotations (snpEff)
-├── 03_Phylogeny/
-│   ├── alignment.fasta    # MAFFT MSA
-│   ├── iqtree_results/    # Tree files with support
-│   └── phylogeny.pdf      # ggtree visualization (optional)
-├── 04_Taxonomy/           # Kraken2/Krona reports
-└── reports/               # MultiQC + summary
-```
 
 ---
 
