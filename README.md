@@ -205,7 +205,7 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
 **With local FASTAs for L/M/S (headers will be rewritten to match VCF contigs):**
 ```bash
 ./build_bunya_concat_tree.sh \
-  -l vcfs.txt \
+  -l ~/vcfs.txt \
   -o bunya_tree_out_concat_localref \
   --segments MF926354.1,KP795084.1,KP795093.1 \
   --refL L.fa --refM M.fa --refS S.fa \
@@ -215,7 +215,7 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
 **Use IUPAC ambiguity codes in the consensus (instead of `-H 1` haplotype selection):**
 ```bash
 ./build_bunya_concat_tree.sh \
-  -l vcfs.txt \
+  -l ~/vcfs.txt \
   -o bunya_tree_out_concat_iupac \
   --segments MF926354.1,KP795084.1,KP795093.1 \
   --auto-ref \
@@ -269,7 +269,7 @@ bunya_tree_out_concat/
 |---|---|
 | `Missing dependency` | `mamba install -c bioconda -c conda-forge <tool>` |
 | IQ-TREE crashes/segfault on macOS | Script auto-retries with `-T 1`, then `GTR+G`, then **FastTree -boot** |
-| iTOL shows no bootstrap | Make sure you uploaded `concat.treefile` and turned on **Internal node labels** |
+| iTOL shows no bootstrap | Make sure you uploaded `concat.treefile` & turned on **Internal node labels** |
 | Alignment invariant | Check `DIAG: concat.aln.fa` → if `varSites=0`, there’s no phylogenetic signal |
 | Wrong segment IDs | Always pass `--segments MF926354.1,KP795084.1,KP795093.1` to pin L/M/S |
 | Consensus empty | Script auto-repairs from reference; see `logs/*.cons.log` |
@@ -284,19 +284,3 @@ bunya_tree_out_concat/
 
 ---
 
-## License
-
-MIT
-
----
-
-## Appendix — run command used in the paper/analysis
-
-```bash
-./build_bunya_concat_tree.sh \
-  -l /Users/gmboowa/Bunya-ONT-Gen/vcfs.txt \
-  -o bunya_tree_out_concat_real \
-  --segments MF926354.1,KP795084.1,KP795093.1 \
-  --auto-ref \
-  --boot 1000
-```
