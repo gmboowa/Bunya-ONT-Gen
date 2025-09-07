@@ -147,7 +147,7 @@ results/
 
 You will build a single phylogeny using consensus sequences per segment (**L/M/S**) concatenated per sample, with partitions preserved & bootstrap support.
 
-### Script: `build_bunya_concat_tree.sh`
+## Script: `build_bunya_concat_tree.sh`
 
 - **What it does**
   - For each VCF/sample: extract each segment → normalize variants → **consensus FASTA**.
@@ -171,7 +171,7 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
   chmod +x build_bunya_concat_tree.sh
   ```
 
-### Inputs
+## Inputs
 
 1. **VCF list file** (`vcfs.txt`): one **absolute path** to a VCF per line  
    _or_ `sample</>sample.vcf[.gz]`.
@@ -190,7 +190,7 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
 
 > If you don’t pass `--segments`, the script auto-detects the top 3 contigs in the first VCF; pinning avoids mismatches.
 
-### Run examples
+## Run examples
 
 **With automatic NCBI reference fetch & bootstrap 1000:**
 ```bash
@@ -223,7 +223,7 @@ You will build a single phylogeny using consensus sequences per segment (**L/M/S
   --boot 1000
 ```
 
-### Outputs
+## Outputs
 
 ```
 bunya_tree_out_concat/
@@ -285,7 +285,7 @@ uname -m
 
 ## Apple Silicon (arm64) setup
 
-### <a name="apple-create-conda-env"></a>1) Create Conda env with SnpEff, Java & NCBI EDirect
+## <a name="apple-create-conda-env"></a>1) Create Conda env with SnpEff, Java & NCBI EDirect
 
 ```bash
 # Initialize Conda for this shell (run once, then reopen the terminal)
@@ -413,7 +413,7 @@ snpEff build \
 ls -lh "$SNPEFF_HOME/data/$DB/snpEffectPredictor.bin"
 ```
 
-### <a name="intel-annotate"></a>4) Annotate your VCFs (either arch)
+## <a name="intel-annotate"></a>4) Annotate your VCFs (either arch)
 
 ```bash
 # STDIN method
