@@ -11,25 +11,36 @@
     --fg:#e6e6ea; --muted:#9aa3b2; --link:#7aa2ff; --bg:#0d1117; --card:#161b22; --border:#2b3138;
   }
   *{box-sizing:border-box}
-  body{font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans";
-       margin:0;color:var(--fg);background:var(--bg)}
-  header{padding:2.25rem 1.25rem 1rem;max-width:980px;margin:0 auto;display:flex;align-items:flex-start;gap:12px}
-  h1{margin:0 0 .25rem;font-size:1.75rem}
-  .muted{color:var(--muted);font-size:.95rem}
-  .spacer{flex:1}
-  .toggle{border:1px solid var(--border);background:var(--card);color:var(--fg);
-          padding:.5rem .7rem;border-radius:999px;cursor:pointer}
-  .toggle:hover{filter:brightness(1.03)}
-  main{max-width:980px;margin:0 auto;padding:0 1.25rem 3rem}
-  section{margin-top:1.25rem}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:.5rem}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 14px 12px}
-  .card h3{margin:0 0 6px;font-size:1.05rem}
-  .card p{margin:0 0 8px;color:var(--muted);font-size:.95rem}
-  a{color:var(--link);text-decoration:none}
-  a:hover{text-decoration:underline}
-  ul{margin:.5rem 0 0 1.1rem}
-  .small{font-size:.9rem}
+  body{
+    font: 18px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans";
+    margin:0; color:var(--fg); background:var(--bg)
+  }
+  header{
+    padding:2.5rem 1.25rem 1.25rem; max-width:980px; margin:0 auto;
+    display:flex; align-items:flex-start; gap:14px
+  }
+  h1{ margin:0 0 .35rem; font-size:2.1rem }
+  .muted{ color:var(--muted); font-size:1.05rem }
+  .spacer{ flex:1 }
+  .toggle{
+    border:1px solid var(--border); background:var(--card); color:var(--fg);
+    padding:.6rem .9rem; border-radius:999px; cursor:pointer; font-size:0.95rem
+  }
+  .toggle:hover{ filter:brightness(1.03) }
+  main{ max-width:980px; margin:0 auto; padding:0 1.25rem 3.25rem }
+  section{ margin-top:1.35rem }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:16px; margin-top:.6rem }
+  .card{ background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px 16px 14px }
+  .card h3{ margin:0 0 8px; font-size:1.2rem }
+  .card p{ margin:0 0 10px; color:var(--muted); font-size:1.02rem }
+  a{ color:var(--link); text-decoration:none }
+  a:hover{ text-decoration:underline }
+  ul{ margin:.6rem 0 0 1.1rem }
+  .small{ font-size:1.05rem; font-weight:600 }
+  @media (min-width:1200px){
+    h1{ font-size:2.3rem }
+    .card h3{ font-size:1.25rem }
+  }
 </style>
 
 <header>
