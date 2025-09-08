@@ -40,6 +40,22 @@
   ul{ margin:.6rem 0 0 1.1rem }
   .small{ font-size:1rem; font-weight:600 }
 
+  /* Make the Species abundance card wider on larger screens
+     and wrap long filenames so they stay inside the card */
+  .card.wide{ grid-column: span 2; }
+  @media (max-width: 720px){
+    .card.wide{ grid-column: auto; } /* fall back to single column on small screens */
+  }
+  .card.longnames ul{ padding-left: 1.1rem; }
+  .card.longnames li{ margin-bottom: 4px; }
+  .card.longnames a{
+    display:inline-block;
+    max-width:100%;
+    overflow-wrap:anywhere;    /* modern wrap for very long tokens */
+    word-break:break-word;     /* fallback */
+    line-height:1.45;
+  }
+
   /* Viewer overlay */
   .viewer-backdrop{
     position:fixed; inset:0; background:var(--overlay-bg);
@@ -143,7 +159,7 @@
         </ul>
       </div>
 
-      <div class="card">
+      <div class="card longnames wide">
         <h3>Species abundance (CSV)</h3>
         <ul>
           <li><a href="summary/SRR34843736.clean_species_abundance_summary.csv">SRR34843736.clean_species_abundance_summary.csv</a></li>
