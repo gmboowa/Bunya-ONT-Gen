@@ -131,6 +131,11 @@
           <li><a href="phylogenetic/Phylogenetic_tree.jpg">Phylogenetic_tree.jpg</a></li>
         </ul>
       </div>
+      <div class="card">
+        <h3>Variant distribution by segment from VCFs</h3>
+        <p>Static image summarizing variant locations across L/M/S segments.</p>
+        <a href="variants_distribution/Variants_on_LMS_segments.jpeg">Open image</a>
+      </div>
     </div>
   </section>
 
@@ -271,7 +276,6 @@
           const th = document.createElement('th'); th.textContent = h; trh.appendChild(th);
         });
         thead.appendChild(trh);
-        frag.appendChild(thead);
         const tbody = document.createElement('tbody');
         for (let i=1;i<lines.length;i++){
           const tr = document.createElement('tr');
