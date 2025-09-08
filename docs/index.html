@@ -6,9 +6,11 @@
 <style>
   :root{
     --fg:#0b1220; --muted:#5b667a; --link:#1f6feb; --bg:#f7f9fc; --card:#ffffff; --border:#e5e9f2;
+    --overlay-bg: rgba(13,17,23,.85);
   }
   html[data-theme="dark"]{
     --fg:#e6e6ea; --muted:#9aa3b2; --link:#7aa2ff; --bg:#0d1117; --card:#161b22; --border:#2b3138;
+    --overlay-bg: rgba(0,0,0,.8);
   }
   *{box-sizing:border-box}
   body{
@@ -37,6 +39,38 @@
   a:hover{ text-decoration:underline }
   ul{ margin:.6rem 0 0 1.1rem }
   .small{ font-size:1rem; font-weight:600 }
+
+  /* Viewer overlay */
+  .viewer-backdrop{
+    position:fixed; inset:0; background:var(--overlay-bg);
+    display:none; align-items:center; justify-content:center; z-index:9999; padding:22px
+  }
+  .viewer{
+    background:var(--card); color:var(--fg); border:1px solid var(--border);
+    border-radius:14px; width:min(1100px, 96vw); max-height:92vh; display:flex; flex-direction:column; overflow:hidden
+  }
+  .viewer-header{
+    display:flex; align-items:center; gap:8px; padding:10px 12px; border-bottom:1px solid var(--border)
+  }
+  .viewer-title{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+  .viewer-spacer{ flex:1 }
+  .viewer-btn{
+    border:1px solid var(--border); background:var(--card); color:var(--fg);
+    padding:.35rem .6rem; border-radius:8px; cursor:pointer; font-size:.9rem
+  }
+  .viewer-btn:hover{ filter:brightness(1.03) }
+  .viewer-body{
+    padding:0; overflow:auto; background:var(--bg)
+  }
+  .viewer-pre{
+    margin:0; padding:14px 16px; font: 13px/1.5 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    white-space:pre; overflow:auto
+  }
+  .viewer-table-wrap{ overflow:auto; padding:12px 12px 16px }
+  table{ border-collapse:collapse; width:100%; font-size:14px }
+  th, td{ border:1px solid var(--border); padding:6px 8px; text-align:left; white-space:nowrap }
+  tr:nth-child(even){ background:rgba(127,127,127,.06) }
+  .hidden{ display:none !important }
   @media (min-width:1200px){
     h1{ font-size:2.1rem }
     .card h3{ font-size:1.2rem }
@@ -112,10 +146,10 @@
       <div class="card">
         <h3>Species abundance (CSV)</h3>
         <ul>
-          <li><a href="summary/SRR34843736.clean_species_abundance_summary.csv">SRR34843736…abundance_summary.csv</a></li>
-          <li><a href="summary/SRR34843737.clean_species_abundance_summary.csv">SRR34843737…abundance_summary.csv</a></li>
-          <li><a href="summary/SRR34843738.clean_species_abundance_summary.csv">SRR34843738…abundance_summary.csv</a></li>
-          <li><a href="summary/SRR34843739.clean_species_abundance_summary.csv">SRR34843739…abundance_summary.csv</a></li>
+          <li><a href="summary/SRR34843736.clean_species_abundance_summary.csv">SRR34843736.clean_species_abundance_summary.csv</a></li>
+          <li><a href="summary/SRR34843737.clean_species_abundance_summary.csv">SRR34843737.clean_species_abundance_summary.csv</a></li>
+          <li><a href="summary/SRR34843738.clean_species_abundance_summary.csv">SRR34843738.clean_species_abundance_summary.csv</a></li>
+          <li><a href="summary/SRR34843739.clean_species_abundance_summary.csv">SRR34843739.clean_species_abundance_summary.csv</a></li>
         </ul>
       </div>
 
@@ -130,23 +164,161 @@
   </section>
 </main>
 
+<!-- Inline viewer overlay -->
+<div id="viewerBackdrop" class="viewer-backdrop" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
+  <div class="viewer">
+    <div class="viewer-header">
+      <div id="viewerTitle" class="viewer-title"></div>
+      <div class="viewer-spacer"></div>
+      <button id="viewerCopy" class="viewer-btn" title="Copy to clipboard">Copy</button>
+      <a id="viewerOpenRaw" class="viewer-btn" target="_blank" rel="noopener">Open raw</a>
+      <button id="viewerClose" class="viewer-btn" title="Close">Close</button>
+    </div>
+    <div class="viewer-body">
+      <div id="viewerTableWrap" class="viewer-table-wrap hidden"><table id="viewerTable"></table></div>
+      <pre id="viewerPre" class="viewer-pre hidden" tabindex="0"></pre>
+    </div>
+  </div>
+</div>
+
 <script>
   (function () {
+    /* theme toggle */
     const btn = document.getElementById('themeToggle');
     const KEY = 'bunya-theme';
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const saved = localStorage.getItem(KEY);
     const initial = saved || (prefersDark ? 'dark' : 'light');
-    function apply(theme){
+    function applyTheme(theme){
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem(KEY, theme);
       btn.setAttribute('aria-pressed', theme === 'dark');
       btn.textContent = theme === 'dark' ? '🌞 Light' : '🌙 Dark';
     }
-    apply(initial);
+    applyTheme(initial);
     btn.addEventListener('click', () => {
       const next = (document.documentElement.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
-      apply(next);
+      applyTheme(next);
     });
+
+    /* inline file viewer for TSV/CSV/VCF/FASTA/TXT/etc. */
+    const interceptExt = ['.tsv','.csv','.vcf','.fa','.fasta','.fna','.txt','.treefile','.contree','.iqtree'];
+    const bypassExt    = ['.html','.htm','.jpg','.jpeg','.png','.svg','.gif','.pdf']; // open normally
+
+    const backdrop = document.getElementById('viewerBackdrop');
+    const pre = document.getElementById('viewerPre');
+    const tableWrap = document.getElementById('viewerTableWrap');
+    const table = document.getElementById('viewerTable');
+    const title = document.getElementById('viewerTitle');
+    const btnCopy = document.getElementById('viewerCopy');
+    const btnClose = document.getElementById('viewerClose');
+    const openRaw = document.getElementById('viewerOpenRaw');
+
+    function extOf(url){
+      const p = url.split('?')[0];
+      const i = p.lastIndexOf('.');
+      return i>=0 ? p.slice(i).toLowerCase() : '';
+    }
+    function shouldBypass(url){
+      const e = extOf(url);
+      if (e === '') return false;
+      return bypassExt.includes(e);
+    }
+    function shouldIntercept(url){
+      const e = extOf(url);
+      if (e === '') return false;
+      return interceptExt.includes(e);
+    }
+    function showBackdrop(){ backdrop.style.display = 'flex'; }
+    function hideBackdrop(){ backdrop.style.display = 'none'; pre.textContent=''; table.innerHTML=''; }
+
+    function renderText(name, text){
+      title.textContent = name;
+      tableWrap.classList.add('hidden');
+      pre.classList.remove('hidden');
+      pre.textContent = text;
+      showBackdrop();
+      pre.focus();
+    }
+
+    function renderTable(name, text, delim){
+      title.textContent = name;
+      pre.classList.add('hidden');
+      tableWrap.classList.remove('hidden');
+      table.innerHTML = '';
+      const lines = text.replace(/\r\n?/g, '\n').split('\n').filter(Boolean);
+      const frag = document.createDocumentFragment();
+      if (lines.length){
+        const thead = document.createElement('thead');
+        const trh = document.createElement('tr');
+        const headers = lines[0].split(delim);
+        headers.forEach(h => {
+          const th = document.createElement('th'); th.textContent = h; trh.appendChild(th);
+        });
+        thead.appendChild(trh);
+        frag.appendChild(thead);
+        const tbody = document.createElement('tbody');
+        for (let i=1;i<lines.length;i++){
+          const tr = document.createElement('tr');
+          const cells = lines[i].split(delim);
+          cells.forEach(c => { const td = document.createElement('td'); td.textContent = c; tr.appendChild(td); });
+          tbody.appendChild(tr);
+        }
+        frag.appendChild(tbody);
+      }
+      table.appendChild(frag);
+      showBackdrop();
+    }
+
+    document.addEventListener('click', function(ev){
+      const a = ev.target.closest('a[href]');
+      if(!a) return;
+
+      const url = a.getAttribute('href');
+      if (url.endsWith('/')) return;               // folder link
+      if (shouldBypass(url)) return;               // images/html/pdf: let browser handle
+      if (!shouldIntercept(url)) return;           // only handle our texty file types
+
+      ev.preventDefault();
+      const abs = new URL(url, location.href).toString();
+      title.textContent = url;
+      openRaw.href = abs;
+
+      fetch(abs).then(r => {
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        return r.text();
+      }).then(text => {
+        const e = extOf(url);
+        if (e === '.tsv' || e === '.vcf') {
+          renderTable(url, text, '\t');            // VCF is tab-delimited
+        } else if (e === '.csv') {
+          renderTable(url, text, ',');
+        } else {
+          renderText(url, text);
+        }
+      }).catch(err => {
+        renderText(url, 'Failed to load file: ' + err.message + '\nURL: ' + abs);
+      });
+    });
+
+    btnCopy.addEventListener('click', () => {
+      const inTable = !tableWrap.classList.contains('hidden');
+      let text = '';
+      if (inTable){
+        // serialize table back to TSV
+        const rows = [];
+        table.querySelectorAll('tr').forEach(tr=>{
+          const cells=[...tr.children].map(td=>td.textContent);
+          rows.push(cells.join('\t'));
+        });
+        text = rows.join('\n');
+      } else {
+        text = pre.textContent;
+      }
+      navigator.clipboard.writeText(text).catch(()=>{});
+    });
+    btnClose.addEventListener('click', hideBackdrop);
+    backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) hideBackdrop(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hideBackdrop(); });
   })();
 </script>
