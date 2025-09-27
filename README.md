@@ -11,7 +11,7 @@
    - [Phylogeny environment](#phylogeny-environment)  
    - [Optional Medaka env (macOS Apple Silicon)](#optional-medaka-env-macos-apple-silicon)  
 3. [Host read removal (Hostile workflow)](#host-read-removal-hostile-workflow)
-4. Demultiplex
+4. [Demultiplex](#demultiplex)
 5. [Results layout](#results-layout)  
 6. [Whole-genome analysis](#whole-genome-analysis)  
 7. [Concatenated phylogeny from VCFs](#concatenated-phylogeny-from-vcfs)  
