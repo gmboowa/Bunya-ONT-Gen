@@ -136,11 +136,11 @@ Inputs
 ```
 Quick start (example)
 
-# Point to your Dorado executable (adjust path as needed)
+### Point to your Dorado executable (adjust path as needed)
 
 export DORADO_BIN="~/dorado-1.1.1-osx-arm64/bin/dorado"
 
-# Run the demultiplexing script
+### Run the demultiplexing script
 
 ```bash
 ./run_dorado_fastq.sh 
