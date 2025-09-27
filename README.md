@@ -11,17 +11,18 @@
    - [Phylogeny environment](#phylogeny-environment)  
    - [Optional Medaka env (macOS Apple Silicon)](#optional-medaka-env-macos-apple-silicon)  
 3. [Host read removal (Hostile workflow)](#host-read-removal-hostile-workflow)
-4. [Results layout](#results-layout)  
-5. [Whole-genome analysis](#whole-genome-analysis)  
-6. [Concatenated phylogeny from VCFs](#concatenated-phylogeny-from-vcfs)  
+4. Demultiplex
+5. [Results layout](#results-layout)  
+6. [Whole-genome analysis](#whole-genome-analysis)  
+7. [Concatenated phylogeny from VCFs](#concatenated-phylogeny-from-vcfs)  
    - [Script: `build_bunya_concat_tree.sh`](#script-build_bunya_concat_treesh)  
    - [Inputs](#inputs)  
    - [Run examples](#run-examples)  
    - [Outputs](#outputs)  
    - [Interpreting the tree & showing bootstrap in iTOL](#interpreting-the-tree--showing-bootstrap-in-itol)  
-7. [Troubleshooting](#troubleshooting)  
-8. [Reproducibility notes](#reproducibility-notes)  
-9. [License](#license)
+8. [Troubleshooting](#troubleshooting)  
+9. [Reproducibility notes](#reproducibility-notes)  
+10. [License](#license)
 
 ---
 
@@ -103,6 +104,148 @@ python3 hostile_clean_ont_human_minimap2.py \
 ```
 
 ---
+## Demultiplexing (Dorado)
+
+`https://software-docs.nanoporetech.com/dorado/latest/`
+
+This stage separates barcoded reads into per-sample files using Dorado.
+
+### Requirements
+
+Dorado ≥ 1.1.1 installed.
+
+A valid sample sheet CSV.
+
+A supported barcode kit (e.g., TWIST-96A-UDI).
+
+Reference: Dorado documentation — Sample sheet
+
+`https://dorado-docs.readthedocs.io/en/latest/barcoding/sample_sheet/?h=demux`
+
+Inputs
+
+```bash
+-i : Directory containing input FASTQ files (one or more).
+
+-o : Output directory (a demux/ folder will be created inside).
+
+-s : Path to the Dorado sample sheet CSV.
+
+-k : Barcode kit name (e.g., TWIST-96A-UDI).
+
+```
+Quick start (example)
+
+# Point to your Dorado executable (adjust path as needed)
+
+export DORADO_BIN="~/dorado-1.1.1-osx-arm64/bin/dorado"
+
+# Run the demultiplexing script
+
+```bash
+./run_dorado_fastq.sh 
+  -i "~/in_put" 
+  -o "~/out_put" 
+  -s "~/twist_sample_sheet.csv" 
+  -k "TWIST-96A-UDI"
+```
+What the script does
+
+Iterates over FASTQ files in -i.
+
+Calls dorado demux with your sample sheet and kit name.
+
+---
+## Alignment / Taxonomic Classification (EPI2ME wf-metagenomics)
+
+This stage performs read classification (i.e., “alignment” in the broad sense) of long-read data using the EPI2ME Labs Nextflow pipeline wf-metagenomics (Kraken2-based). The workflow ships with built-in reference databases that include viral sequences from NCBI, and it also supports external Kraken2 databases.
+
+### Prerequisites
+
+Nextflow (≥22.x)
+
+Docker (or Podman/Singularity; examples below use Docker)
+
+macOS on Apple Silicon: Colima recommended (see specs below)
+
+### Databases
+
+Built-in: The pipeline includes default databases with viral coverage (no extra setup required).
+
+Custom: You can point to your own Kraken2 DB (e.g., from Ben Langmead’s “Index Zone”) via the pipeline’s DB parameter.
+
+Popular source of ready-made Kraken2 indices: Index Zone by Ben Langmead.
+
+If using a custom DB, ensure it matches your architecture (and Kraken2 version), and provide the DB path to the workflow (e.g., --kraken2_db /path/to/kraken2_db).
+
+Resource specs (CPU/RAM/Disk)
+
+Minimums depend on DB size and sample count. Suggested starting points:
+
+CPU: 4–8 vCPUs (set higher for faster throughput)
+
+RAM: 16–32 GB (Kraken2 is memory-intensive; enable memory mapping if tight)
+
+Disk: 50–200 GB free (DB + work directory + outputs)
+
+Concurrency: Limit with -process.maxForks if running on a laptop.
+
+Example (Apple Silicon, using Colima)
+
+# Start a dedicated Colima VM for Docker containers
+
+```bash
+colima start --cpu 6 --memory 24 --disk 60
+```
+
+Adjust CPU/RAM/disk based on your hardware and dataset size.
+
+If you’re on Docker Desktop, you can skip Colima and set equivalent resources in Docker Desktop → Settings → Resources.
+
+Quick start
+
+# Run EPI2ME Labs wf-metagenomics on demo/test data (replace paths as needed)
+
+```bash
+nextflow run epi2me-labs/wf-metagenomics \
+  --fastq wf-metagenomics-demo/test_data \
+  -profile standard \
+  --kraken2_memory_mapping \
+  -process.maxForks 1 \
+  -resume
+```
+### Parameter notes
+
+--fastq: Directory or files containing input FASTQ(.gz).
+
+-profile standard: Uses the pipeline’s default profile (with Docker).
+
+--kraken2_memory_mapping: Enables Kraken2’s memory-mapping mode to reduce RAM usage.
+
+-process.maxForks 1: Limits parallel tasks (useful on laptops; increase on bigger machines).
+
+-resume: Reuse previous work where possible.
+
+### Using a custom Kraken2 DB
+
+```bash
+nextflow run epi2me-labs/wf-metagenomics 
+  --fastq /path/to/reads 
+  --kraken2_db /path/to/kraken2_db 
+  --kraken2_memory_mapping 
+  -profile standard 
+  -process.maxForks 2 
+  -resume
+```
+### Outputs (typical)
+
+Classification reports (Kraken2): per-sample read assignments by taxon
+
+Summaries/plots: aggregate tables and visual summaries of community composition
+
+Logs & provenance: Nextflow run reports and trace files for reproducibility
+
+----
 
 ## Whole-genome analysis
 
