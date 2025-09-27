@@ -192,7 +192,7 @@ Concurrency: Limit with -process.maxForks if running on a laptop.
 
 Example (Apple Silicon, using Colima)
 
-# Start a dedicated Colima VM for Docker containers
+### Start a dedicated Colima VM for Docker containers
 
 ```bash
 colima start --cpu 6 --memory 24 --disk 60
@@ -204,7 +204,7 @@ If you’re on Docker Desktop, you can skip Colima and set equivalent resources 
 
 Quick start
 
-# Run EPI2ME Labs wf-metagenomics on demo/test data (replace paths as needed)
+### Run EPI2ME Labs wf-metagenomics on demo/test data (replace paths as needed)
 
 ```bash
 nextflow run epi2me-labs/wf-metagenomics \
