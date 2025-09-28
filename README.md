@@ -197,19 +197,20 @@ This stage separates barcoded reads into per-sample files using Dorado.
 ```
 **Quick start (example)**
 
-# Set DORADO_BIN to the binary for **your** OS/CPU. See details <a href="https://software-docs.nanoporetech.com/dorado/latest/#__tabbed_1_1" style="color: purple; font-weight: 900;"><strong>here</strong></a>.
-# (Fallback if styles are stripped: see details [**here**](https://software-docs.nanoporetech.com/dorado/latest/#__tabbed_1_1))
-# Choose and extract the matching prebuilt archive, e.g.:
-#   - dorado-1.1.1-linux-x64
-#   - dorado-1.1.1-linux-arm64
-#   - dorado-1.1.1-osx-arm64
-#   - dorado-1.1.1-win64
-# After extracting the .tar.gz or .zip to your desired location, set the path.
+Set DORADO_BIN to the binary for **your** OS/CPU. See details <a href="https://software-docs.nanoporetech.com/dorado/latest/#__tabbed_1_1" style="color: purple; font-weight: 900;"><strong>here</strong></a>.
+(Fallback if styles are stripped: see details [**here**](https://software-docs.nanoporetech.com/dorado/latest/#__tabbed_1_1))
+**Choose and extract the matching prebuilt archive, e.g.:**
+- dorado-1.1.1-linux-x64
+- dorado-1.1.1-linux-arm64
+- dorado-1.1.1-osx-arm64
+- dorado-1.1.1-win64
 
-# Note: use $HOME (or unquoted ~). Quoting "~" prevents expansion.
+After extracting the .tar.gz or .zip to your desired location, set the path.
+
+### Note: use $HOME (or unquoted ~). Quoting "~" prevents expansion.
 export DORADO_BIN="$HOME/dorado-1.1.1-osx-arm64/bin/dorado"
 
-# Optional: verify
+### Optional: verify
 "$DORADO_BIN" --version
 
 ### Point to your Dorado executable (adjust path as needed)
