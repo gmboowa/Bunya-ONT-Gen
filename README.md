@@ -102,7 +102,71 @@ python3 hostile_clean_ont_human_minimap2.py \
 ~/sample1.fastq.gz
 ~/sample2.fastq.gz
 ```
+### Running epi2me-labs/wf-metagenomics with a sample sheet (absolute path)
+This guide shows a repeatable, copy-paste process to run wf-metagenomics on four pooled FASTQ files by organizing them into a folder-of-folders (one subfolder per sample), providing a sample sheet via an absolute CSV path, and running the workflow with settings that are stable on macOS + Docker/Colima.
 
+**Prerequisites** 
+- Java 17–24 (Java 23 recommended if you already have it)
+- Nextflow in your PATH (`nextflow -version` should work)
+- Docker (recommended); on Apple Silicon, Colima works well
+
+**brew install colima docker**
+- `colima start --cpu 6 --memory 24 --disk 60`
+- `docker run --rm alpine sh -c 'cat /proc/meminfo | grep MemTotal'`
+- Or use Conda/Mamba (no containers): `brew install micromamba`
+
+**Create the “folder-of-folders” input (one subfolder per sample)**
+Your pooled reads live here:
+
+```bash
+SRC="~/bunya"
+Create a parent folder to pass to --fastq:
+
+PARENT="~/bunya_by_barcode"
+
+rm -rf "$PARENT"
+mkdir -p "$PARENT"
+
+# Make four subfolders (barcode01..barcode04) and hardlink each SRR file into its subfolder
+i=1
+for s in SRR34843736 SRR34843737 SRR34843738 SRR34843739; do
+  b=$(printf "barcode%02d" "$i")    # barcode01, barcode02, ...
+  mkdir -p "$PARENT/$b"
+  ln -f "$SRC/${s}.fastq.gz" "$PARENT/$b/${s}.fastq.gz"   # use `cp -p` instead of ln if you prefer copies
+  i=$((i+1))
+done
+```
+**Create the sample sheet (absolute CSV path)**
+You can store the CSV anywhere. Here we put it inside the parent folder so the absolute path is simple.
+
+```bash
+SS="~/bunya_by_barcode/sample_sheet.csv"
+cat > "$SS" <<'CSV'
+barcode,alias
+barcode01,SRR34843736
+barcode02,SRR34843737
+barcode03,SRR34843738
+barcode04,SRR34843739
+CSV
+```
+
+**Run wf-metagenomics with the absolute CSV path**
+
+--kraken2_memory_mapping to lower RAM demand for the Kraken2 DB (~8 GB).
+-process.maxForks 1 to avoid multiple concurrent Kraken2 jobs.
+--out_dir to control where results land.
+
+```bash
+nextflow run epi2me-labs/wf-metagenomics \
+  --fastq "~/bunya_by_barcode" \
+  --sample_sheet "~/bunya_by_barcode/sample_sheet.csv" \
+  -profile standard \
+  --kraken2_memory_mapping \
+  -process.maxForks 1 \
+  --out_dir "~/bunya_out/wf_results" \
+  -resume
+
+```
 ---
 ## Demultiplexing (Dorado)
 
@@ -112,17 +176,14 @@ This stage separates barcoded reads into per-sample files using Dorado.
 
 ### Requirements
 
-Dorado ≥ 1.1.1 installed.
-
-A valid sample sheet CSV.
-
-A supported barcode kit (e.g., TWIST-96A-UDI).
-
-Reference: Dorado documentation — Sample sheet
+- Dorado ≥ 1.1.1 installed
+- A valid sample sheet CSV
+- A supported barcode kit (e.g., TWIST-96A-UDI)
+- Reference: Dorado documentation — Sample sheet
 
 `https://dorado-docs.readthedocs.io/en/latest/barcoding/sample_sheet/?h=demux`
 
-Inputs
+**Inputs**
 
 ```bash
 -i : Directory containing input FASTQ files (one or more).
@@ -134,11 +195,26 @@ Inputs
 -k : Barcode kit name (e.g., TWIST-96A-UDI).
 
 ```
-Quick start (example)
+**Quick start (example)**
+
+# Set DORADO_BIN to the binary for **your** OS/CPU. See details <a href="https://software-docs.nanoporetech.com/dorado/latest/#__tabbed_1_1" style="color: purple; font-weight: 900;"><strong>here</strong></a>.
+# (Fallback if styles are stripped: see details [**here**](https://software-docs.nanoporetech.com/dorado/latest/#__tabbed_1_1))
+# Choose and extract the matching prebuilt archive, e.g.:
+#   - dorado-1.1.1-linux-x64
+#   - dorado-1.1.1-linux-arm64
+#   - dorado-1.1.1-osx-arm64
+#   - dorado-1.1.1-win64
+# After extracting the .tar.gz or .zip to your desired location, set the path.
+
+# Note: use $HOME (or unquoted ~). Quoting "~" prevents expansion.
+export DORADO_BIN="$HOME/dorado-1.1.1-osx-arm64/bin/dorado"
+
+# Optional: verify
+"$DORADO_BIN" --version
 
 ### Point to your Dorado executable (adjust path as needed)
 
-export DORADO_BIN="~/dorado-1.1.1-osx-arm64/bin/dorado"
+export DORADO_BIN="~/dorado-1.1.1-osx-arm64/bin/dorado" 
 
 ### Run the demultiplexing script
 
@@ -149,11 +225,10 @@ export DORADO_BIN="~/dorado-1.1.1-osx-arm64/bin/dorado"
   -s "~/twist_sample_sheet.csv" 
   -k "TWIST-96A-UDI"
 ```
-What the script does
+**What the script does**
 
-Iterates over FASTQ files in -i.
-
-Calls dorado demux with your sample sheet and kit name.
+- Iterates over FASTQ files in -i.
+- Calls dorado demux with your sample sheet and kit name.
 
 ---
 ## Alignment / Taxonomic Classification (EPI2ME wf-metagenomics)
@@ -162,35 +237,25 @@ This stage performs read classification (i.e., “alignment” in the broad sens
 
 ### Prerequisites
 
-Nextflow (≥22.x)
-
-Docker (or Podman/Singularity; examples below use Docker)
-
-macOS on Apple Silicon: Colima recommended (see specs below)
+- Nextflow (≥22.x)
+- Docker (or Podman/Singularity
+- macOS on Apple Silicon: *Colima* recommended 
 
 ### Databases
+- Built-in: The pipeline includes default databases with viral coverage (no extra setup required).
+- Custom: You can point to your own Kraken2 DB (e.g., from Ben Langmead’s “Index Zone”) via the pipeline’s DB parameter.
 
-Built-in: The pipeline includes default databases with viral coverage (no extra setup required).
-
-Custom: You can point to your own Kraken2 DB (e.g., from Ben Langmead’s “Index Zone”) via the pipeline’s DB parameter.
-
-Popular source of ready-made Kraken2 indices: Index Zone by Ben Langmead.
-
+**Popular source of ready-made Kraken2 indices**.
 If using a custom DB, ensure it matches your architecture (and Kraken2 version), and provide the DB path to the workflow (e.g., --kraken2_db /path/to/kraken2_db).
 
-Resource specs (CPU/RAM/Disk)
+**Resource specs (CPU/RAM/Disk)**
 
-Minimums depend on DB size and sample count. Suggested starting points:
-
-CPU: 4–8 vCPUs (set higher for faster throughput)
-
-RAM: 16–32 GB (Kraken2 is memory-intensive; enable memory mapping if tight)
-
-Disk: 50–200 GB free (DB + work directory + outputs)
-
-Concurrency: Limit with -process.maxForks if running on a laptop.
-
-Example (Apple Silicon, using Colima)
+- Minimums depend on DB size and sample count. Suggested starting points:
+- CPU: 4–8 vCPUs (set higher for faster throughput)
+- RAM: 16–32 GB (Kraken2 is memory-intensive; enable memory mapping if tight)
+- Disk: 50–200 GB free (DB + work directory + outputs)
+- Concurrency: Limit with -process.maxForks if running on a laptop.
+- Example (Apple Silicon, using Colima)
 
 ### Start a dedicated Colima VM for Docker containers
 
@@ -198,10 +263,9 @@ Example (Apple Silicon, using Colima)
 colima start --cpu 6 --memory 24 --disk 60
 ```
 
-Adjust CPU/RAM/disk based on your hardware and dataset size.
+**Adjust CPU/RAM/disk based on your hardware and dataset size**.
 
 If you’re on Docker Desktop, you can skip Colima and set equivalent resources in Docker Desktop → Settings → Resources.
-
 Quick start
 
 ### Run EPI2ME Labs wf-metagenomics on demo/test data (replace paths as needed)
@@ -216,15 +280,11 @@ nextflow run epi2me-labs/wf-metagenomics \
 ```
 ### Parameter notes
 
---fastq: Directory or files containing input FASTQ(.gz).
-
--profile standard: Uses the pipeline’s default profile (with Docker).
-
---kraken2_memory_mapping: Enables Kraken2’s memory-mapping mode to reduce RAM usage.
-
--process.maxForks 1: Limits parallel tasks (useful on laptops; increase on bigger machines).
-
--resume: Reuse previous work where possible.
+--fastq:  Directory or files containing input FASTQ(.gz).
+-profile standard:  Uses the pipeline’s default profile (with Docker).
+--kraken2_memory_mapping:  Enables Kraken2’s memory-mapping mode to reduce RAM usage.
+-process.maxForks 1:  Limits parallel tasks (useful on laptops; increase on bigger machines).
+-resume:  Reuse previous work where possible.
 
 ### Using a custom Kraken2 DB
 
@@ -238,12 +298,9 @@ nextflow run epi2me-labs/wf-metagenomics
   -resume
 ```
 ### Outputs (typical)
-
-Classification reports (Kraken2): per-sample read assignments by taxon
-
-Summaries/plots: aggregate tables and visual summaries of community composition
-
-Logs & provenance: Nextflow run reports and trace files for reproducibility
+- Classification reports (Kraken2): per-sample read assignments by taxon
+- Summaries/plots: aggregate tables and visual summaries of community composition
+- Logs & provenance: Nextflow run reports and trace files for reproducibility
 
 ----
 
