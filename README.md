@@ -207,13 +207,12 @@ Set DORADO_BIN to the binary for **your** OS/CPU. See details <a href="https://s
 
 After extracting the .tar.gz or .zip to your desired location, set the path.
 
-### Note: use $HOME (or unquoted ~). Quoting "~" prevents expansion.
-export DORADO_BIN="$HOME/dorado-1.1.1-osx-arm64/bin/dorado"
-
 ### Optional: verify
 "$DORADO_BIN" --version
 
 ### Point to your Dorado executable (adjust path as needed)
+
+export DORADO_BIN="$HOME/dorado-1.1.1-osx-arm64/bin/dorado"
 
 export DORADO_BIN="~/dorado-1.1.1-osx-arm64/bin/dorado" 
 
